@@ -1,0 +1,4 @@
+{
+  "leadEndpoint": "",
+  "_comment": "把 Google Apps Script Web App 部署網址貼到 leadEndpoint。空字串 = 不送資料（dev mode）。部署 SOP 見 /docs/GAS部署SOP.md。"
+}

@@ -582,6 +582,26 @@
   letter-spacing: 0.5px;
 }
 
+/* 紅熱客 fast lane：視覺刻意輕、不搶主 CTA */
+.fast-lane-note {
+  text-align: center;
+  margin: 18px auto 0;
+  font-size: 0.88rem;
+  color: #8E877D;
+}
+.fast-lane-link {
+  color: #7C837B;
+  font-weight: 500;
+  border-bottom: 1px dotted #7C837B;
+  padding-bottom: 1px;
+  text-decoration: none;
+  transition: color .15s ease;
+}
+.fast-lane-link:hover {
+  color: #5C4A37;
+  border-bottom-style: solid;
+}
+
 /* Stage 3 主視覺下方解鎖按鈕 */
 .btn-quote-unlock {
   display: inline-block;

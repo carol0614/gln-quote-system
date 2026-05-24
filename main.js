@@ -7,6 +7,17 @@
   'use strict';
 
   // ────────────────────────────────────────────────
+  // 線索回傳端點（GAS Web App URL）
+  // 部署完 Apps Script 後把 URL 貼到 web/config.json 的 leadEndpoint 欄位。
+  // 空字串 = 不送（local dev 預設）。
+  // ────────────────────────────────────────────────
+  let LEAD_ENDPOINT = '';
+  fetch('config.json')
+    .then(r => r.ok ? r.json() : {})
+    .then(cfg => { LEAD_ENDPOINT = (cfg && cfg.leadEndpoint) || ''; })
+    .catch(() => { /* 沒設定就跳過，不擋使用者 */ });
+
+  // ────────────────────────────────────────────────
   // 載入係數參數
   // ────────────────────────────────────────────────
   let PARAMS = null;
@@ -205,6 +216,8 @@
     const caseType = f.querySelector('input[name="caseType"]:checked')?.value || 'midage';
     const age = parseInt(f.age.value, 10);
 
+    const val = (name) => (f.elements[name] ? f.elements[name].value : '');
+
     return {
       caseType,
       age,
@@ -214,6 +227,7 @@
       style: f.querySelector('input[name="styleLevel"]:checked')?.value || 'local',
       rooms: parseInt(f.rooms.value, 10) || 3,
       floors: parseInt(f.floors.value, 10) || 2,
+      balconies: parseInt(val('balconies'), 10) || 0,
       hasKitchen: f.querySelector('input[name="kitchen"]:checked')?.value === 'yes',
       bathroomsRenovate: parseInt(f.bathRenovate.value, 10) || 0,
       bathroomsNew: parseInt(f.bathNew.value, 10) || 0,
@@ -229,15 +243,12 @@
         contactPref: f.contactPref.value,
         referral: f.referral.value,
         address: f.address.value,
-        structure: f.structure.value,
         lastReno: f.lastReno.value,
-        styleRefs: Array.from(f.querySelectorAll('input[name="styleRef"]:checked')).map(c => c.value),
+        styleElements: val('styleElements'),
         styleAvoid: f.styleAvoid.value,
-        budget: f.budget.value,
         budgetExpected: f.budgetExpected.value,
         budgetFlex: f.budgetFlex.value,
         startMonth: f.startMonth.value,
-        endMonth: f.endMonth.value,
         moveInMonth: f.moveInMonth.value,
         designNeeds: f.designNeeds.value,
         members: f.members.value,
@@ -260,17 +271,61 @@
 
   function fmt(n) { return Number(n).toLocaleString('zh-TW'); }
 
-  // 6 大類 metadata（icon、說明、為什麼會有價差）
+  // 7 大類 metadata（廚房+衛浴已合併為廚衛設備）
   const CAT_META = {
-    '基礎工程': { icon: '🧱', desc: '拆除／泥作／水電／防水／磁磚／鋁窗', diff: '屋齡愈大 / 漏水壁癌 / 管線重拉差異最大' },
-    '裝修工程': { icon: '🪵', desc: '木作／油漆／系統櫃／石材／木地板', diff: '風格層級（簡約 0.85 vs 精緻 1.30）差 50%' },
-    '冷氣':     { icon: '❄️',  desc: '依房間數估台數 (房數+1) × 4.5 萬', diff: '幾乎不浮動，依房數固定' },
+    '基礎工程': { icon: '🧱', desc: '拆除／泥作／水電／防水／磁磚／鋁窗', diff: '屋齡愈大、漏水壁癌、管線重拉差異最大' },
+    '裝修工程': { icon: '🪵', desc: '木作／油漆／系統櫃／石材／木地板', diff: '風格層級差異最大' },
+    '冷氣':     { icon: '❄️',  desc: '依房間數估台數', diff: '幾乎不浮動，依房數固定' },
     '大型設備': { icon: '⚙️',  desc: '全熱／淨水／軟水／除濕／熱泵／太陽能', diff: '勾選與否差異最大；透天又比大樓高' },
-    '智能家電': { icon: '🏠', desc: '照明／窗簾／空調／影音／中控／安防', diff: '4 級單選，從 0 到 120 萬都有可能' },
-    '廚房設備': { icon: '🍳', desc: '廚櫃／檯面／瓦斯爐／水槽', diff: '屋齡 <15 年自動 0；≥15 年依房數 27/35/45 萬' },
-    '衛浴設備': { icon: '🚿', desc: '馬桶／面盆／淋浴／鏡櫃／配管', diff: '翻新 15 萬/間 + 新增 25 萬/間；<15 年自動 0' },
+    '智能家電': { icon: '🏠', desc: '照明／窗簾／空調／影音／中控／安防', diff: '從基礎到全屋中控差異很大' },
+    '廚衛設備': { icon: '🚿', desc: '廚房 + 衛浴設備', diff: '進口和國產價差非常大，磁磚等材料和設備的選擇也會影響價格' },
     '窗戶':     { icon: '🪟', desc: '鋁窗汰換（一般窗 + 落地窗）', diff: '看扇數；老屋常需全換' }
   };
+
+  // 把後端回傳的 8 類合併為 7 類（廚房+衛浴）
+  function mergeKitchenBath(cat) {
+    const merged = {};
+    for (const [k, v] of Object.entries(cat || {})) {
+      if (k === '廚房設備' || k === '衛浴設備') {
+        merged['廚衛設備'] = (merged['廚衛設備'] || 0) + v;
+      } else {
+        merged[k] = v;
+      }
+    }
+    return merged;
+  }
+
+  // ────────────────────────────────────────────────
+  // 把線索送到 GAS（fire-and-forget；失敗也不擋使用者）
+  // ────────────────────────────────────────────────
+  function sendLead(inputs, result) {
+    if (!LEAD_ENDPOINT) {
+      console.warn('[GLN] LEAD_ENDPOINT 未設定，跳過資料回傳。');
+      return Promise.resolve({ skipped: true });
+    }
+    const payload = {
+      submittedAt: new Date().toISOString(),
+      source: 'gln-quote-web',
+      version: 'v3.3',
+      inputs,
+      result: {
+        clientRange: result.clientRange,
+        total: result.total,
+        unitPrice: result.unitPrice,
+        confidence: result.confidence && result.confidence.label,
+        confidenceScore: result.confidence && result.confidence.score,
+        categoryBreakdown: result.categoryBreakdown
+      }
+    };
+    // 用 text/plain 避開 GAS CORS preflight
+    return fetch(LEAD_ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    }).then(() => ({ ok: true }))
+      .catch(err => { console.error('[GLN] sendLead 失敗：', err); return { ok: false, err }; });
+  }
 
   function showResult(inputs, result, isQuick) {
     const meta = inputs.meta || {};
@@ -285,43 +340,43 @@
       .map(o => o.label)
       .join('、') || '（無）';
 
-    // ─── 6 大類視覺化分區 ───
-    const cat = result.categoryBreakdown || {};
+    // 丈量提案費用（依坪數 + 透天）
+    const isTownhouse = inputs.caseType === 'townhouse_mid' || inputs.caseType === 'townhouse_old';
+    const measureFeeLabel = (inputs.ping >= 45 || isTownhouse) ? '20,000 元' : '10,000 元';
+
+    // ─── 7 大類視覺化分區（廚衛已合併）───
+    const cat = mergeKitchenBath(result.categoryBreakdown);
     const catEntries = Object.entries(cat).filter(([k, v]) => v > 0);
+    const catTotal = catEntries.reduce((s, [, v]) => s + v, 0) || 1;
     const maxCat = Math.max(...catEntries.map(([, v]) => v), 1);
     const catVizHtml = catEntries.map(([k, v]) => {
       const m = CAT_META[k] || { icon: '·', desc: '', diff: '' };
       const widthPct = Math.max(2, Math.round(v / maxCat * 100));
+      const pct = Math.round(v / catTotal * 100);
       return `
         <div class="cat-bar">
           <div class="cat-bar-head">
             <span class="cat-icon">${m.icon}</span>
             <span class="cat-name">${k}</span>
-            <span class="cat-amount">NT$ ${fmt(v)} 萬</span>
+            <span class="cat-amount">NT$ ${fmt(v)} 萬　<small class="cat-pct">(${pct}%)</small></span>
           </div>
           <div class="cat-bar-track"><div class="cat-bar-fill" style="width:${widthPct}%"></div></div>
           <p class="cat-desc">${m.desc}</p>
         </div>`;
     }).join('');
 
-    // ─── 預算超出怎麼辦（強化版）───
+    // ─── 預算超出怎麼辦（柔性版，不揭內部倍數）───
     let budgetBlock = '';
-    const budgetCap = parseInt(meta.budget, 10);
+    const budgetCap = parseInt(meta.budgetExpected, 10);
     if (budgetCap && budgetCap > 0 && budgetCap < result.clientRange[0]) {
-      const gap = result.clientRange[0] - budgetCap;
       budgetBlock = `
         <div class="result-callout callout-warn">
           <div class="callout-head">
             <span class="callout-icon">⚠️</span>
             <h3>預算超出該怎麼辦？</h3>
           </div>
-          <p class="callout-lead">您的預算上限 <b>${fmt(budgetCap)} 萬</b>，估價區間下限 <b>${fmt(result.clientRange[0])} 萬</b>，差距約 <b>${fmt(gap)} 萬</b>。先別緊張，我們有 3 條路：</p>
-          <ol class="callout-list">
-            <li><b>分階段裝修</b> ─ 先做必做（水電、防水、衛浴），系統櫃／軟裝／家具未來再補。降 30–50% 預算很常見。</li>
-            <li><b>降風格層級</b> ─ 從「精緻 ×1.30」改「局部 ×1.15」可降約 13%；改「簡約 ×0.85」可降約 35%。</li>
-            <li><b>減大設備／智能</b> ─ 全熱、太陽能、智能家電是「Nice to have」。先撤可省 30–120 萬。</li>
-          </ol>
-          <p class="callout-foot">💡 設計階段我們會幫您做嚴謹的預算控管，不會為了簽約硬塞。預算不合適我們會柔性引導，<b>敢說不</b>。</p>
+          <p class="callout-lead">您期待的工程預算 <b>${fmt(budgetCap)} 萬</b>，估價區間下限 <b>${fmt(result.clientRange[0])} 萬</b>。先別緊張，這部分可以一起討論。</p>
+          <p class="callout-foot">💡 設計階段我們會做預算的討論控管，也會協助設計及工程優化符合需求，更會引導及給予專業的評估建議。</p>
         </div>
       `;
     }
@@ -352,11 +407,11 @@
       <!-- ② 你的房子摘要 -->
       <div class="result-section">
         <h4>您的房屋摘要</h4>
-        <div class="result-row"><span class="label">案型</span><span class="value">${caseLabel}（×${b.caseTypeMultiplier}）</span></div>
-        <div class="result-row"><span class="label">屋齡 / 坪數</span><span class="value">${inputs.age} 年　·　${inputs.ping} 坪（規模 ×${b.scaleMultiplier}）</span></div>
-        <div class="result-row"><span class="label">所在區域</span><span class="value">${inputs.county}（${b.regionZone} +${b.regionAdjPct}%）</span></div>
-        <div class="result-row"><span class="label">屋況加成</span><span class="value">${conditionLabels}（+${b.conditionAdjCapped}%${b.conditionAdjRaw > b.conditionAdjCapped ? '，已套上限 +' + b.conditionCap + '%' : ''}）</span></div>
-        <div class="result-row"><span class="label">設計風格</span><span class="value">${styleLabel}（×${b.styleMultiplier}）</span></div>
+        <div class="result-row"><span class="label">案型</span><span class="value">${caseLabel}</span></div>
+        <div class="result-row"><span class="label">屋齡 / 坪數</span><span class="value">${inputs.age} 年　·　${inputs.ping} 坪</span></div>
+        <div class="result-row"><span class="label">所在區域</span><span class="value">${inputs.county}</span></div>
+        <div class="result-row"><span class="label">屋況</span><span class="value">${conditionLabels}</span></div>
+        <div class="result-row"><span class="label">設計風格</span><span class="value">${styleLabel}</span></div>
       </div>
 
       <!-- ③ 6 大類視覺化 -->
@@ -388,32 +443,30 @@
         <h4>為什麼同坪數會有價差？</h4>
         <p class="section-sub">同樣 30 坪，可能 200 萬也可能 600 萬。差異主要在這幾個地方：</p>
         <ul class="diff-list">${diffRows}</ul>
-        <p class="diff-foot">→ <b>愈精準的屋況資訊愈能縮小區間。</b>現勘後我們可以給您 ±5% 的正式報價。</p>
+        <p class="diff-foot">→ 現場勘查後，我們會依照屋況、環境及需求，給您更準確的預算範圍及提案。<br><b>設計流程後會有詳細報價書。</b></p>
       </div>
 
       <!-- ⑦ 丈量提案價值 -->
       <div class="result-callout callout-value">
         <div class="callout-head">
           <span class="callout-icon">📐</span>
-          <h3>下一步：丈量提案（10,000–20,000 元）</h3>
+          <h3>下一步：丈量提案（${measureFeeLabel}）</h3>
         </div>
         <p class="callout-lead">您現在拿到的是「<b>區間粗估</b>」。下一階段「<b>丈量提案</b>」會給您：</p>
         <ul class="value-list">
-          <li>✅ 設計師到場丈量 2–4 小時，現場確認屋況</li>
+          <li>✅ 設計師及總監現場丈量 1–2 小時，確認屋況及需求</li>
           <li>✅ 量身製作 2–4 週的提案（預算／風格／平面規劃）</li>
-          <li>✅ 一次完整提案會議，共投入 20–40 小時</li>
+          <li>✅ 提案會議：說明及討論平面格局制定、設計方向、預算討論建議<br><small>＊備註：報告僅供現場討論使用</small></li>
           <li>✅ <b>簽設計約後丈量費全額折抵設計費</b>，等於免費</li>
-          <li>✅ 區間從 ±${Math.abs(conf.lowerPct)}/${conf.upperPct}% 收斂到 ±5%</li>
         </ul>
         <p class="callout-foot">💡 收費目的是<b>確保雙方有誠意合作</b>，並保障已簽約客戶的服務品質（設計師 90% 工時須留給簽約客戶）。</p>
       </div>
 
       <!-- ⑧ LINE CTA -->
       <div class="result-line-cta">
-        <p class="result-line-title">📩 預算粗估只是第一步</p>
-        <p class="result-line-sub">加入官方 LINE，由客服安排丈量提案時段與適合的設計師。<br>
-        <b>兩個工作日內</b>專人聯繫。</p>
-        <a href="https://lin.ee/YXt0syEs" target="_blank" rel="noopener" class="btn btn-line btn-line-lg">加入官方 LINE 預約丈量 →</a>
+        <p class="result-line-title">📩 立即預約精準客製化的規劃方案</p>
+        <p class="result-line-sub">點擊加入官方 LINE，<br>預約免費線上諮詢或現場丈量。</p>
+        <a href="https://lin.ee/YXt0syEs" target="_blank" rel="noopener" class="btn btn-line btn-line-lg">請專人跟我聯絡 →</a>
         <p class="result-line-meta">官方 LINE ID：@glninterior　·　0910-859-525</p>
       </div>
 
@@ -456,6 +509,7 @@
 
     try {
       const result = GLNEstimate.estimate(PARAMS, inputs);
+      sendLead(inputs, result); // fire-and-forget，不擋 UI
       showResult(inputs, result, false);
       console.log('[GLN] 完整估價：', { inputs, result });
     } catch (err) {
