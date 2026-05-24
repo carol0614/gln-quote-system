@@ -22,15 +22,15 @@ const SHEET_NAME = '線索';                      // 工作表分頁名稱（會
 const NOTIFY_EMAIL = 'carol@goodlivingnotes.com'; // 通知信收件，空字串 = 不寄
 // ====================================
 
-// 表頭欄位（變更請確保新增欄位放在最後，舊資料才不會錯位）
+// 表頭欄位（2026-05-25 v2：同步表單實際欄位；ensureHeaders() 會自動把舊表頭升級）
 const HEADERS = [
   '時間戳記', 'Email', '姓名', '電話', '案型', '屋齡', '坪數', '縣市',
   '預估區間下限(萬)', '預估區間上限(萬)', '預估總價(萬)', '每坪單價(萬)',
-  '信心度', '信心分數', '預算範圍', '期待預算(萬)', '入住時間',
-  '屋況加成', '風格層級', '房數', '樓層數',
+  '信心度', '信心分數', '期待預算(萬)', '預算彈性', '開工月', '入住時間',
+  '屋況加成', '風格層級', '房數', '樓層數', '陽台數',
   '翻新衛浴', '新增衛浴', '是否含廚房', '一般窗', '落地窗',
-  '大型設備', '智能家電', '結構', '上次裝修',
-  '參考風格', '想避開', '設計需求', '居住成員', '收納需求', '服務範圍',
+  '大型設備', '智能家電', '上次裝修',
+  '喜歡/必要的元素', '想避開', '設計需求', '居住成員', '收納需求', '服務範圍',
   '希望現勘', '其他備註', '認識管道', '聯絡偏好', '推薦碼',
   '地址', '照片數', '完整 JSON'
 ];
@@ -71,14 +71,16 @@ function buildRow(data) {
     inp.caseType || '', inp.age || '', inp.ping || '', inp.county || '',
     range[0] || '', range[1] || '', res.total || '', res.unitPrice || '',
     res.confidence || '', res.confidenceScore || '',
-    meta.budget || '', meta.budgetExpected || '', meta.moveInMonth || '',
-    (inp.conditions || []).join('、'), inp.style || '', inp.rooms || '', inp.floors || '',
+    meta.budgetExpected || '', meta.budgetFlex || '',
+    meta.startMonth || '', meta.moveInMonth || '',
+    (inp.conditions || []).join('、'), inp.style || '',
+    inp.rooms || '', inp.floors || '', inp.balconies || 0,
     inp.bathroomsRenovate || 0, inp.bathroomsNew || 0,
     inp.hasKitchen ? 'Y' : 'N',
     inp.regularWindows || 0, inp.balconyWindows || 0,
     (inp.largeEquipment || []).join('、'), inp.smartHome || '',
-    meta.structure || '', meta.lastReno || '',
-    (meta.styleRefs || []).join('、'), meta.styleAvoid || '',
+    meta.lastReno || '',
+    meta.styleElements || '', meta.styleAvoid || '',
     meta.designNeeds || '', meta.members || '', meta.storage || '', meta.serviceScope || '',
     meta.siteVisit || '', meta.notes || '',
     meta.source || '', meta.contactPref || '', meta.referral || '',
@@ -90,13 +92,29 @@ function buildRow(data) {
 function appendToSheet(row) {
   const ss = SpreadsheetApp.openById(SHEET_ID);
   let sheet = ss.getSheetByName(SHEET_NAME);
-  if (!sheet) {
-    sheet = ss.insertSheet(SHEET_NAME);
-    sheet.appendRow(HEADERS);
-    sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight('bold').setBackground('#7C837B').setFontColor('#FFFFFF');
-    sheet.setFrozenRows(1);
-  }
+  if (!sheet) sheet = ss.insertSheet(SHEET_NAME);
+  ensureHeaders(sheet);
   sheet.appendRow(row);
+}
+
+// 確保 sheet 表頭與 HEADERS 常數同步；HEADERS 更新時下一筆 POST 自動升級
+function ensureHeaders(sheet) {
+  const styleHeader = (sheet) => {
+    sheet.getRange(1, 1, 1, HEADERS.length)
+      .setFontWeight('bold').setBackground('#7C837B').setFontColor('#FFFFFF');
+    sheet.setFrozenRows(1);
+  };
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow(HEADERS);
+    styleHeader(sheet);
+    return;
+  }
+  const current = sheet.getRange(1, 1, 1, Math.max(sheet.getLastColumn(), HEADERS.length)).getValues()[0];
+  const aligned = HEADERS.every((h, i) => h === current[i]);
+  if (!aligned) {
+    sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
+    styleHeader(sheet);
+  }
 }
 
 function sendNotification(data) {
