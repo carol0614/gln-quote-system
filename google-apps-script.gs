@@ -17,7 +17,7 @@
  */
 
 // ===== 設定區（請依實際情況修改） =====
-const SHEET_ID = 'YOUR_SHEET_ID_HERE';         // 換成你的 Google Sheet ID
+const SHEET_ID = '1KA6ykh3QmmGggudtqkcZ1mN6mrb1q8rEU5N6euIltTw'; // GLN_預算分配表_線索
 const SHEET_NAME = '線索';                      // 工作表分頁名稱（會自動建立）
 const NOTIFY_EMAIL = 'carol@goodlivingnotes.com'; // 通知信收件，空字串 = 不寄
 // ====================================

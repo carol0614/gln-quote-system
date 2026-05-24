@@ -722,9 +722,17 @@ textarea { resize: vertical; min-height: 60px; }
   object-fit: cover;
   display: block;
 }
+.team-org {
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
+  color: var(--color-taupe);
+  letter-spacing: 0.12em;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
 .team-name {
   font-family: var(--font-ibarra);
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   color: var(--color-olive-dark);
   margin-bottom: 4px;
   letter-spacing: 0.02em;
