@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>30 秒粗估你家裝修預算 | Good Living Notes</title>
+<meta name="description" content="GLN 老屋翻新 4 階段漸進診斷：30 秒粗估 → 7 題診斷 → 範圍報價 → LINE 解鎖完整資料。">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Ibarra+Real+Nova:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="landing.css">
+</head>
+<body>
+
+<!-- Minimal Header -->
+<header class="site-header landing-header">
+  <div class="header-inner">
+    <a href="index.html" class="brand" aria-label="Good Living Notes">
+      <img class="brand-logo" src="img/gln-circle.png" alt="GLN" width="44" height="44">
+      <div class="brand-name">Good Living Notes</div>
+    </a>
+    <nav class="header-nav">
+      <a href="https://lin.ee/YXt0syEs" target="_blank" rel="noopener" class="nav-cta">LINE 預約</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- Stage Progress Indicator                       -->
+<!-- ════════════════════════════════════════════ -->
+<div class="stage-progress" id="stage-progress">
+  <div class="stage-dot active" data-s="1"><span>1</span><b>看一眼</b></div>
+  <div class="stage-line"></div>
+  <div class="stage-dot" data-s="2"><span>2</span><b>診斷</b></div>
+  <div class="stage-line"></div>
+  <div class="stage-dot" data-s="3"><span>3</span><b>看範圍</b></div>
+  <div class="stage-line"></div>
+  <div class="stage-dot" data-s="4"><span>4</span><b>解鎖完整</b></div>
+</div>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- STAGE 1：落地頁                               -->
+<!-- ════════════════════════════════════════════ -->
+<section class="stage stage-1 active" data-stage="1">
+  <div class="container">
+    <p class="stage-eyebrow">STAGE 1 · 看一眼</p>
+    <h1 class="stage-hook">好感生活提案<br><span>建築設計 ｜ 室內設計 ｜ 老屋翻新 ｜ 自地自建</span></h1>
+
+    <!-- 6 組前後對比小圖（自動讀 img/landing/baN-before|after.jpg；無檔即顯示灰色 placeholder） -->
+    <div class="ba-thumbs">
+      <div class="ba-thumb" data-slot="1">
+        <div class="ba-thumb-imgs">
+          <div class="ba-thumb-img before"><img src="img/landing/ba1-before.jpg" alt="高雄前鎮 40 年公寓 Before" onerror="this.style.display='none'"></div>
+          <div class="ba-thumb-img after"><img src="img/landing/ba1-after.jpg" alt="高雄前鎮 40 年公寓 After" onerror="this.style.display='none'"></div>
+        </div>
+        <p class="ba-thumb-cap">高雄前鎮 · 40 年公寓 · 45 坪</p>
+      </div>
+      <div class="ba-thumb" data-slot="2">
+        <div class="ba-thumb-imgs">
+          <div class="ba-thumb-img before"><img src="img/landing/ba2-before.jpg" alt="高雄苓雅 37 年公寓 Before" onerror="this.style.display='none'"></div>
+          <div class="ba-thumb-img after"><img src="img/landing/ba2-after.jpg" alt="高雄苓雅 37 年公寓 After" onerror="this.style.display='none'"></div>
+        </div>
+        <p class="ba-thumb-cap">高雄苓雅 · 37 年公寓 · 28 坪</p>
+      </div>
+      <div class="ba-thumb" data-slot="3">
+        <div class="ba-thumb-imgs">
+          <div class="ba-thumb-img before"><img src="img/landing/ba3-before.jpg" alt="高雄鳥松 27 年透天 Before" onerror="this.style.display='none'"></div>
+          <div class="ba-thumb-img after"><img src="img/landing/ba3-after.jpg" alt="高雄鳥松 27 年透天 After" onerror="this.style.display='none'"></div>
+        </div>
+        <p class="ba-thumb-cap">高雄鳥松 · 27 年透天 · 60 坪</p>
+      </div>
+      <div class="ba-thumb" data-slot="4">
+        <div class="ba-thumb-imgs">
+          <div class="ba-thumb-img before"><img src="img/landing/ba4-before.jpg" alt="台北新店 7 年大樓 Before" onerror="this.style.display='none'"></div>
+          <div class="ba-thumb-img after"><img src="img/landing/ba4-after.jpg" alt="台北新店 7 年大樓 After" onerror="this.style.display='none'"></div>
+        </div>
+        <p class="ba-thumb-cap">台北新店 · 7 年大樓 · 37 坪</p>
+      </div>
+      <div class="ba-thumb" data-slot="5">
+        <div class="ba-thumb-imgs">
+          <div class="ba-thumb-img before"><img src="img/landing/ba5-before.jpg" alt="高雄前鎮 32 年透天 Before" onerror="this.style.display='none'"></div>
+          <div class="ba-thumb-img after"><img src="img/landing/ba5-after.jpg" alt="高雄前鎮 32 年透天 After" onerror="this.style.display='none'"></div>
+        </div>
+        <p class="ba-thumb-cap">高雄前鎮 · 32 年透天 · 70 坪</p>
+      </div>
+      <div class="ba-thumb" data-slot="6">
+        <div class="ba-thumb-imgs">
+          <div class="ba-thumb-img before"><img src="img/landing/ba6-before.jpg" alt="台北新店 咖啡廳 Before" onerror="this.style.display='none'"></div>
+          <div class="ba-thumb-img after"><img src="img/landing/ba6-after.jpg" alt="台北新店 咖啡廳 After" onerror="this.style.display='none'"></div>
+        </div>
+        <p class="ba-thumb-cap">台北新店 · 咖啡廳 · 22 坪</p>
+      </div>
+    </div>
+
+    <div class="stage-cta-row">
+      <button class="btn btn-primary btn-xl" data-next-stage="2">30 秒粗估你家裝修預算 →</button>
+    </div>
+    <p class="stage-cta-note">不需註冊、不需加 LINE、立刻知道。</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- STAGE 2：診斷流程（7 題 + 3 教育卡）          -->
+<!-- ════════════════════════════════════════════ -->
+<section class="stage stage-2" data-stage="2">
+  <div class="container container-narrow">
+    <p class="stage-eyebrow">STAGE 2 · 7 題診斷</p>
+    <h2 class="stage-title">回答 7 題，立即取得粗估範圍</h2>
+
+    <!-- 題目進度條 -->
+    <div class="diag-progress">
+      <div class="diag-progress-bar" id="diag-progress-bar"></div>
+    </div>
+    <p class="diag-progress-label" id="diag-progress-label">第 1 / 7 題</p>
+
+    <form id="diag-form" novalidate>
+
+      <!-- Q1 坪數 -->
+      <fieldset class="diag-step active" data-q="1">
+        <legend>Q1. 您家有多大？</legend>
+        <p class="q-hint">請填室內實際坪數（不含公設）。</p>
+        <div class="form-grid">
+          <div class="field field-full">
+            <label>室內實坪（不含公設）</label>
+            <input type="number" name="ping" min="1" max="500" step="0.5" required placeholder="例：30">
+          </div>
+        </div>
+        <div class="diag-actions">
+          <span></span>
+          <button type="button" class="btn btn-primary diag-next">下一題 →</button>
+        </div>
+      </fieldset>
+
+      <!-- Q2 屋齡（直接輸入年數） -->
+      <fieldset class="diag-step" data-q="2">
+        <legend>Q2. 屋齡多少？</legend>
+        <p class="q-hint">這是影響預算最關鍵的因素之一。直接填數字即可。</p>
+        <div class="form-grid">
+          <div class="field field-full">
+            <label>屋齡（年）</label>
+            <input type="number" name="age" min="0" max="100" required placeholder="例：30">
+          </div>
+        </div>
+        <div class="diag-actions">
+          <button type="button" class="btn btn-outline diag-prev">← 上一題</button>
+          <button type="button" class="btn btn-primary diag-next">下一題 →</button>
+        </div>
+      </fieldset>
+
+      <!-- 教育卡 1（Q2 屋齡後，依屋齡動態顯示 4 種版本） -->
+      <div class="edu-card" data-edu="after-q2">
+        <span class="edu-mark">💡 您剛剛解鎖了第 1 張知識卡</span>
+        <h3 class="edu-dyn-title">關於您的屋齡</h3>
+        <div class="edu-dyn-body">
+          <p data-age-variant="0-15"><b>屋齡 0–15 年。</b>不需要更動基礎工程，影響預算範圍的會是 <b>裝修材質的選擇</b>（系統櫃 vs 木作、進口 vs 國產）。</p>
+          <p data-age-variant="15-25"><b>屋齡 15–25 年。</b>建議評估 <b>防水和水電</b> 是否還有效用，可能會局部更動基礎工程。</p>
+          <p data-age-variant="25-50"><b>屋齡 25–50 年（老屋）。</b>建議預算分配注重在 <b>基礎工程</b>——防水、水電、廚房、廁所為重點花費。</p>
+          <p data-age-variant="50+"><b>屋齡 50 年以上（老屋）。</b>預算分配注重在 <b>基礎工程</b>（防水、水電、廚房、廁所），同時 <b>評估結構安全</b>。</p>
+        </div>
+        <button type="button" class="btn btn-primary edu-continue">收下，繼續 →</button>
+      </div>
+
+      <!-- Q3 房屋形態（8 選 1，自地自建額外問地號） -->
+      <fieldset class="diag-step" data-q="3">
+        <legend>Q3. 房屋形態是？</legend>
+        <p class="q-hint">不同形態的法規、結構與風險不同——答完會解鎖該形態的關鍵提醒。</p>
+        <div class="radio-cards radio-cards-2col">
+          <label class="radio-card"><input type="radio" name="houseForm" value="community" required><span>社區大樓</span><small>10 戶以上 / 有管委會</small></label>
+          <label class="radio-card"><input type="radio" name="houseForm" value="apartment" required><span>公寓</span><small>5 層以下 / 無電梯</small></label>
+          <label class="radio-card"><input type="radio" name="houseForm" value="elevator-mansion" required><span>電梯華廈</span><small>有電梯小住宅</small></label>
+          <label class="radio-card"><input type="radio" name="houseForm" value="row-townhouse" required><span>連排透天</span><small>緊鄰鄰戶</small></label>
+          <label class="radio-card"><input type="radio" name="houseForm" value="detached-villa" required><span>獨棟透天 / 別墅</span><small>四面臨空</small></label>
+          <label class="radio-card"><input type="radio" name="houseForm" value="rural" required><span>平房 / 三合院 / 農舍</span><small>傳統建物</small></label>
+          <label class="radio-card"><input type="radio" name="houseForm" value="commercial" required><span>商空</span><small>店面 / 辦公</small></label>
+          <label class="radio-card"><input type="radio" name="houseForm" value="self-build" required><span>自地自建</span><small>從地號開始</small></label>
+        </div>
+
+        <!-- 自地自建額外輸入：地號 -->
+        <div class="field self-build-only" id="self-build-extra" style="display:none; margin-top:14px">
+          <label>地號（協助查詢土地坪效、建蔽率、容積率）</label>
+          <input type="text" name="landParcel" placeholder="例：台北市大安區XX段 X 小段 XX 地號">
+        </div>
+
+        <div class="diag-actions">
+          <button type="button" class="btn btn-outline diag-prev">← 上一題</button>
+          <button type="button" class="btn btn-primary diag-next">下一題 →</button>
+        </div>
+      </fieldset>
+
+      <!-- 教育卡 2（Q3 房屋形態後，依形態動態顯示 8 種版本） -->
+      <div class="edu-card" data-edu="after-q3">
+        <span class="edu-mark">💡 您解鎖了第 2 張知識卡</span>
+        <h3 class="edu-dyn-title">關於您的房屋形態</h3>
+        <div class="edu-dyn-body">
+          <p data-form-variant="community"><b>社區大樓。</b>注意要 <b>申請裝修許可證</b>（向管委會申請），這是工程能否順利進場的關鍵。</p>
+          <p data-form-variant="apartment"><b>公寓。</b>注意要 <b>申請裝修許可證</b>（依各縣市建管規定）。</p>
+          <p data-form-variant="elevator-mansion"><b>電梯華廈。</b>注意要 <b>申請裝修許可證</b>，並協調電梯使用時段。</p>
+          <p data-form-variant="row-townhouse"><b>連排透天。</b>容易因為 <b>鄰居漏水</b> 而導致滲水、壁癌；同時要確認 <b>是否有違建</b>。</p>
+          <p data-form-variant="detached-villa"><b>獨棟透天 / 別墅。</b>特別注意 <b>外牆的防水</b>，以及 <b>是否有違建</b>。</p>
+          <p data-form-variant="rural"><b>平房 / 三合院 / 農舍。</b>特別注意 <b>是否有違建</b> 及 <b>屋頂漏水</b> 的問題。</p>
+          <p data-form-variant="commercial"><b>商業空間。</b>注意 <b>行業別</b> 及 <b>相對應的法規</b>（消防、用電、無障礙）。</p>
+          <p data-form-variant="self-build"><b>自地自建。</b>請提供 <b>地號</b>，我們可協助查詢 <b>土地坪效、建蔽率、容積率</b>。</p>
+        </div>
+        <button type="button" class="btn btn-primary edu-continue">收下，繼續 →</button>
+      </div>
+
+      <!-- Q4 裝修動機 -->
+      <fieldset class="diag-step" data-q="4">
+        <legend>Q4. 主要裝修動機是？</legend>
+        <div class="radio-cards radio-cards-2col">
+          <label class="radio-card"><input type="radio" name="motive" value="buy-new" required><span>剛買新成屋</span><small>客變 / 入住前整理</small></label>
+          <label class="radio-card"><input type="radio" name="motive" value="renovate-old" required><span>翻舊屋自住</span><small>解決現有屋況問題</small></label>
+          <label class="radio-card"><input type="radio" name="motive" value="rental" required><span>買來收租</span><small>投報率優先</small></label>
+          <label class="radio-card"><input type="radio" name="motive" value="aging" required><span>自住養老</span><small>無障礙 / 安全</small></label>
+          <label class="radio-card"><input type="radio" name="motive" value="other" required><span>其他</span><small>商業空間 / 民宿 etc.</small></label>
+        </div>
+        <div class="diag-actions">
+          <button type="button" class="btn btn-outline diag-prev">← 上一題</button>
+          <button type="button" class="btn btn-primary diag-next">下一題 →</button>
+        </div>
+      </fieldset>
+
+
+      <!-- Q5 最焦慮的事 -->
+      <fieldset class="diag-step" data-q="5">
+        <legend>Q5. 你最焦慮的 1 件事是？</legend>
+        <p class="q-hint">只能選一個，幫我們知道您最在意什麼。</p>
+        <div class="radio-cards radio-cards-2col">
+          <label class="radio-card"><input type="radio" name="worry" value="budget" required><span>💰 預算超出</span><small>怕被加價、報價不準</small></label>
+          <label class="radio-card"><input type="radio" name="worry" value="timeline" required><span>⏱ 工期延誤</span><small>等不及搬進去</small></label>
+          <label class="radio-card"><input type="radio" name="worry" value="design" required><span>🎨 設計不對</span><small>怕設計師沒抓到我的風格</small></label>
+          <label class="radio-card"><input type="radio" name="worry" value="quality" required><span>🛠 用料偷工</span><small>怕做完 1 年就壞</small></label>
+        </div>
+        <div class="diag-actions">
+          <button type="button" class="btn btn-outline diag-prev">← 上一題</button>
+          <button type="button" class="btn btn-primary diag-next">下一題 →</button>
+        </div>
+      </fieldset>
+
+      <!-- 教育卡 3（Q5 焦慮後，依焦慮動態顯示 4 種版本，正面回應 GLN 怎麼解） -->
+      <div class="edu-card" data-edu="after-q5">
+        <span class="edu-mark">💡 您解鎖了第 3 張知識卡</span>
+        <h3 class="edu-dyn-title">GLN 怎麼解您的焦慮</h3>
+        <div class="edu-dyn-body">
+          <p data-worry-variant="budget"><b>預算超出？</b>我們在設計階段會進行 <b>四階段報價檢討</b>，並且在 <b>工程簽約前就確認好預算</b>。</p>
+          <p data-worry-variant="timeline"><b>工期延誤？</b>我們在工程進行前即會 <b>排定工期表</b>，並且 <b>每週回報</b>。</p>
+          <p data-worry-variant="design"><b>設計不對？</b>我們有 <b>設計師、品質總監和總監的層層把關</b>。</p>
+          <p data-worry-variant="quality"><b>用料偷工？</b>我們有 <b>超過上千項的工程檢查表</b>，且會經過 <b>工務品質總監和總監的層層把關</b>。</p>
+        </div>
+        <button type="button" class="btn btn-primary edu-continue">收下，繼續 →</button>
+      </div>
+
+      <!-- Q6 預期搬入時間 -->
+      <fieldset class="diag-step" data-q="6">
+        <legend>Q6. 預期幾月搬進去？</legend>
+        <div class="radio-cards radio-cards-2col">
+          <label class="radio-card"><input type="radio" name="moveIn" value="3m" required><span>3 個月內</span><small>急著搬</small></label>
+          <label class="radio-card"><input type="radio" name="moveIn" value="6m" required><span>3–6 個月</span><small>有點壓力</small></label>
+          <label class="radio-card"><input type="radio" name="moveIn" value="12m" required><span>6–12 個月</span><small>合理時程</small></label>
+          <label class="radio-card"><input type="radio" name="moveIn" value="flexible" required><span>沒急著搬</span><small>品質優先</small></label>
+        </div>
+        <div class="diag-actions">
+          <button type="button" class="btn btn-outline diag-prev">← 上一題</button>
+          <button type="button" class="btn btn-primary diag-next">下一題 →</button>
+        </div>
+      </fieldset>
+
+
+      <!-- Q7 預算範圍 -->
+      <fieldset class="diag-step" data-q="7">
+        <legend>Q7. 您心中的預算上限是？</legend>
+        <p class="q-hint">不會公開、不會勉強您一定要花這麼多。只是讓我們知道您預期的金額。</p>
+        <div class="radio-cards radio-cards-2col">
+          <label class="radio-card"><input type="radio" name="budget" value="100" required><span>100 萬以下</span></label>
+          <label class="radio-card"><input type="radio" name="budget" value="200" required><span>100–200 萬</span></label>
+          <label class="radio-card"><input type="radio" name="budget" value="300" required><span>200–300 萬</span></label>
+          <label class="radio-card"><input type="radio" name="budget" value="500" required><span>300–500 萬</span></label>
+          <label class="radio-card"><input type="radio" name="budget" value="800" required><span>500–800 萬</span></label>
+          <label class="radio-card"><input type="radio" name="budget" value="1500" required><span>800–1500 萬</span></label>
+          <label class="radio-card"><input type="radio" name="budget" value="9999" required><span>1500 萬以上</span></label>
+          <label class="radio-card"><input type="radio" name="budget" value="0" required><span>待討論</span></label>
+        </div>
+
+        <!-- 簡化縣市選 1 -->
+        <div class="field" style="margin-top:18px">
+          <label>所在地區（影響工資水準）</label>
+          <select name="region" required>
+            <option value="">—</option>
+            <option value="台北">雙北 / 基隆 / 離島</option>
+            <option value="桃園">桃竹苗</option>
+            <option value="台中">中部</option>
+            <option value="高雄">南部</option>
+            <option value="宜蘭">東部</option>
+          </select>
+        </div>
+
+        <div class="diag-actions">
+          <button type="button" class="btn btn-outline diag-prev">← 上一題</button>
+          <button type="submit" class="btn btn-primary">看我的粗估範圍 →</button>
+        </div>
+      </fieldset>
+
+    </form>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- STAGE 3：粗估報價頁                           -->
+<!-- ════════════════════════════════════════════ -->
+<section class="stage stage-3" data-stage="3">
+  <div class="container container-narrow">
+    <p class="stage-eyebrow">STAGE 3 · 粗估範圍</p>
+
+    <!-- 主視覺：大字範圍報價 -->
+    <div class="quote-hero">
+      <p class="quote-label">預算建議範圍</p>
+      <h2 class="quote-range" id="quote-range">— 萬</h2>
+      <p class="quote-acc-dynamic"></p>
+      <a href="#unlock-line" class="btn btn-line btn-quote-unlock" data-next-stage="4">
+        進一步解鎖預算分配 → 加 LINE
+      </a>
+    </div>
+
+    <!-- 為什麼會有差距 -->
+    <div class="why-diff">
+      <h3>為什麼是「範圍」而不是「數字」？</h3>
+      <p class="why-diff-lead">同樣 30 坪老屋，可能 200 萬也可能 600 萬。差距來自 4 個關鍵變數，<b>不到現場看不出來</b>：</p>
+      <div class="var-grid">
+        <div class="var-card">
+          <span class="var-num">01</span>
+          <h4>原屋況 · 隔間結構</h4>
+          <p>樑柱有沒有裂縫？要不要改格局？打除前看不到。</p>
+        </div>
+        <div class="var-card">
+          <span class="var-num">02</span>
+          <h4>水電管路路線</h4>
+          <p>管線老化程度、總電量是否需升級、糞管排水有沒有逆水坡。</p>
+        </div>
+        <div class="var-card">
+          <span class="var-num">03</span>
+          <h4>設備材料選擇</h4>
+          <p>同樣品項，國產與進口可差 3 倍。但不一定貴的好。</p>
+        </div>
+        <div class="var-card">
+          <span class="var-num">04</span>
+          <h4>現場施工環境</h4>
+          <p>電梯能不能載？樓梯狹不狹窄？這影響工資 10–20%。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 「看看別人實際花了多少」整個 section 已依 Carol 指示刪除（v2 #6） -->
+
+    <!-- GLN 公司資歷（4 個具體數字） -->
+    <div class="gln-stats">
+      <div class="gln-stat">
+        <span class="gln-stat-num">20<small>+</small></span>
+        <span class="gln-stat-label">團隊服務</span>
+      </div>
+      <div class="gln-stat">
+        <span class="gln-stat-num">30<small>+ 年</small></span>
+        <span class="gln-stat-label">翻修經驗</span>
+      </div>
+      <div class="gln-stat">
+        <span class="gln-stat-num">100<small>+</small></span>
+        <span class="gln-stat-label">老屋改造</span>
+      </div>
+      <div class="gln-stat">
+        <span class="gln-stat-num">1000<small> 項</small></span>
+        <span class="gln-stat-label">工程檢查表</span>
+      </div>
+    </div>
+
+    <!-- 資源包預告 + 單一 CTA（精簡為 2 項 high-value） -->
+    <div class="resource-tease" id="unlock-line">
+      <h3>想要更精準？加 LINE 立刻拿到：</h3>
+      <ul class="tease-list">
+        <li>📊 <b>專屬預算分配版</b>　依您的屋況拆解：基礎工程、裝修工程和其他工程的預算比例</li>
+        <li>🏠 <b>完整作品集</b>　20+ 案例</li>
+      </ul>
+    </div>
+
+    <div class="stage-cta-row">
+      <button class="btn btn-line btn-xl" data-next-stage="4">加 LINE 領取 →</button>
+    </div>
+
+    <div class="stage-cta-row" style="margin-top:30px">
+      <button class="btn btn-outline" data-back-stage="2">← 回去改答案</button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- STAGE 4：LINE 加入頁                           -->
+<!-- ════════════════════════════════════════════ -->
+<section class="stage stage-4" data-stage="4">
+  <div class="container container-narrow">
+    <p class="stage-eyebrow">STAGE 4 · 解鎖完整</p>
+    <h2 class="stage-title">掃 QR 或點按鈕，立即加入</h2>
+
+    <div class="qr-block">
+      <div class="qr-frame">
+        <!-- 用 lin.ee QR 服務動態生成 -->
+        <img src="https://qr-official.line.me/sid/M/glninterior.png" alt="GLN LINE QR Code" class="qr-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="qr-fallback" style="display:none">
+          <div class="qr-fallback-icon">📱</div>
+          <p>請點下方按鈕加入</p>
+          <p class="qr-id">LINE ID：@glninterior</p>
+        </div>
+      </div>
+      <p class="qr-meta">📱 手機掃描　/　桌機右鍵存圖</p>
+    </div>
+
+    <div class="line-add-cta">
+      <a href="https://lin.ee/YXt0syEs" target="_blank" rel="noopener" class="btn btn-line btn-xl">📲 點此打開 LINE 加入</a>
+      <p class="line-id">官方 LINE ID：<b>@glninterior</b></p>
+    </div>
+
+    <!-- 加入後會收到什麼（精簡為一句話） -->
+    <p class="unlock-oneliner">加入後，您會收到 <b>專屬的預算分配版</b>、<b>資源包</b>、<b>完整作品集</b>。</p>
+
+    <div class="stage-cta-row" style="margin-top:30px">
+      <button class="btn btn-outline" data-back-stage="3">← 回去看粗估</button>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="img/gln-lockup-white.png" alt="GLN" class="footer-logo">
+      <p>Good Living Notes · 好感生活提案股份有限公司</p>
+    </div>
+    <div class="footer-meta">
+      <p>0910-859-525 · LINE @glninterior</p>
+      <p>© 2026 GLN. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="estimate.js"></script>
+<script src="landing.js"></script>
+</body>
+</html>

@@ -1215,3 +1215,399 @@ textarea { resize: vertical; min-height: 60px; }
 }
 .reason.good .reason-score { color: #6A8F62; }
 .reason.bad .reason-score  { color: #B85C5C; }
+
+/* ═══════════════════════════════════════════════════════
+   S3 結果頁：6 分類視覺化 + callout 區塊
+   ═══════════════════════════════════════════════════════ */
+
+.section-sub {
+  font-size: 0.85rem;
+  color: #8E877D;
+  margin: 4px 0 12px;
+}
+
+/* 6 分類橫條 */
+.cat-bars { display: flex; flex-direction: column; gap: 12px; }
+.cat-bar {
+  padding: 10px 12px;
+  background: #FAF6EE;
+  border-radius: 6px;
+}
+.cat-bar-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.cat-icon { font-size: 1.05rem; }
+.cat-name {
+  font-family: 'Noto Serif TC', serif;
+  font-weight: 600;
+  color: #3A332B;
+  flex: 0 0 auto;
+}
+.cat-amount {
+  margin-left: auto;
+  font-family: 'Ibarra Real Nova', serif;
+  font-weight: 600;
+  color: #5C4A37;
+  font-size: 0.95rem;
+}
+.cat-bar-track {
+  height: 8px;
+  background: #E7E2D8;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.cat-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #7C837B, #8E877D);
+  border-radius: 4px;
+  transition: width .4s ease;
+}
+.cat-desc {
+  font-size: 0.78rem;
+  color: #8E877D;
+  margin: 6px 0 0;
+}
+
+/* Callout 通用樣式 */
+.result-callout {
+  margin: 18px 0;
+  padding: 18px 20px;
+  border-radius: 10px;
+  border-left: 4px solid #7C837B;
+  background: #FAF6EE;
+}
+.callout-warn {
+  border-left-color: #C67D5A;
+  background: #F8EFE5;
+}
+.callout-value {
+  border-left-color: #94A88E;
+  background: #F0F2EC;
+}
+.callout-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.callout-icon { font-size: 1.15rem; }
+.callout-head h3 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #3A332B;
+  margin: 0;
+}
+.callout-lead {
+  font-size: 0.92rem;
+  color: #3A332B;
+  margin: 0 0 10px;
+  line-height: 1.65;
+}
+.callout-list,
+.value-list {
+  margin: 8px 0 10px;
+  padding-left: 22px;
+  font-size: 0.9rem;
+  color: #3A332B;
+  line-height: 1.7;
+}
+.value-list {
+  list-style: none;
+  padding-left: 0;
+}
+.value-list li { padding-left: 4px; }
+.callout-foot {
+  margin: 12px 0 0;
+  font-size: 0.85rem;
+  color: #5C4A37;
+  padding-top: 10px;
+  border-top: 1px dashed #D9D3C7;
+}
+
+/* 為什麼有價差列表 */
+.diff-list {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0;
+}
+.diff-list li {
+  padding: 8px 12px;
+  border-bottom: 1px solid #F0EDE5;
+  font-size: 0.88rem;
+  color: #3A332B;
+  line-height: 1.55;
+}
+.diff-list li:last-child { border-bottom: none; }
+.diff-foot {
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: #FAF6EE;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  color: #5C4A37;
+}
+
+/* ═══════════════════════════════════════════════════════
+   S4 照片上傳區
+   ═══════════════════════════════════════════════════════ */
+
+.photo-upload-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+.photo-zone {
+  padding: 14px;
+  background: #FAF6EE;
+  border: 1.5px dashed #B8B0A2;
+  border-radius: 8px;
+  transition: all .15s ease;
+}
+.photo-zone:hover { border-color: #7C837B; background: #F5EFE6; }
+.photo-zone-warn { border-color: #C67D5A; background: #F8EFE5; }
+.photo-zone-style { margin-top: 12px; }
+.photo-zone-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+  color: #3A332B;
+}
+.photo-cat-icon { font-size: 1.1rem; }
+.photo-count {
+  margin-left: auto;
+  font-family: 'Ibarra Real Nova', serif;
+  font-size: 0.85rem;
+  color: #7C837B;
+  background: #fff;
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 1px solid #E7E2D8;
+}
+.photo-input {
+  display: block;
+  width: 100%;
+  padding: 6px;
+  font-size: 0.85rem;
+  color: #5C4A37;
+}
+.photo-input::file-selector-button {
+  padding: 6px 10px;
+  border: 1px solid #B8B0A2;
+  border-radius: 4px;
+  background: #fff;
+  font-size: 0.85rem;
+  cursor: pointer;
+  margin-right: 8px;
+  font-family: inherit;
+}
+.photo-input::file-selector-button:hover { background: #F5EFE6; }
+.photo-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.photo-thumb {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #E7E2D8;
+}
+.photo-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.photo-remove {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(58,51,43,0.75);
+  color: #fff;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.photo-remove:hover { background: #C67D5A; }
+.photo-hint {
+  font-size: 0.75rem;
+  color: #C67D5A;
+  margin: 6px 0 0;
+}
+
+.ai-analyze-stub {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: linear-gradient(135deg, #FAF6EE 0%, #F0EDE5 100%);
+  border-radius: 8px;
+  text-align: center;
+}
+.btn-ai-disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+.ai-stub-hint {
+  font-size: 0.78rem;
+  color: #8E877D;
+  margin: 6px 0 0;
+}
+
+/* ═══════════════════════════════════════════════════════
+   S5 信任素材：Resource group title / Case studies / NEW tag
+   ═══════════════════════════════════════════════════════ */
+
+.resource-group-title {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #5C4A37;
+  margin: 32px 0 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #E7E2D8;
+  letter-spacing: 0.5px;
+}
+.resource-group-title-2 { margin-top: 48px; }
+
+.resource-card-new {
+  position: relative;
+  border: 1.5px solid #94A88E !important;
+  background: linear-gradient(135deg, #F0F2EC 0%, #FAF6EE 100%);
+}
+.resource-tag-new {
+  background: #94A88E !important;
+  color: #fff !important;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.resource-grid-compact { gap: 10px; }
+.resource-card-mini {
+  padding: 14px 16px !important;
+}
+.resource-card-mini h4 {
+  font-size: 0.95rem !important;
+  margin-bottom: 4px !important;
+}
+.resource-card-mini p {
+  font-size: 0.8rem !important;
+  margin: 0 !important;
+}
+
+/* Case Studies */
+.cases-section {
+  padding: var(--space-6) 0;
+  background: #FAF6EE;
+}
+.case-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+  margin-top: 24px;
+}
+.case-study-card {
+  background: #fff;
+  border: 1px solid #E7E2D8;
+  border-radius: 10px;
+  padding: 22px;
+  transition: all .2s ease;
+}
+.case-study-card:hover {
+  border-color: #7C837B;
+  box-shadow: 0 4px 14px rgba(124,131,123,0.12);
+  transform: translateY(-2px);
+}
+.case-meta {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 0.78rem;
+}
+.case-type {
+  background: #7C837B;
+  color: #fff;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+.case-area {
+  color: #8E877D;
+  padding: 2px 8px;
+}
+.case-title {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #3A332B;
+  margin: 0 0 14px;
+  line-height: 1.4;
+}
+.case-stats {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 14px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.case-stats li {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 10px;
+  background: #FAF6EE;
+  border-radius: 6px;
+}
+.case-stats li b {
+  font-family: 'Ibarra Real Nova', serif;
+  font-size: 1rem;
+  color: #5C4A37;
+  font-weight: 600;
+}
+.case-stats li span {
+  font-size: 0.72rem;
+  color: #8E877D;
+  margin-top: 2px;
+}
+.case-summary {
+  font-size: 0.88rem;
+  color: #5C4A37;
+  line-height: 1.6;
+  margin: 0;
+  padding-top: 12px;
+  border-top: 1px dashed #E7E2D8;
+}
+.case-cta {
+  margin-top: 28px;
+  text-align: center;
+  padding: 18px;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px dashed #B8B0A2;
+}
+.case-cta p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #3A332B;
+}
+.case-cta a {
+  color: #7C837B;
+  text-decoration: none;
+  border-bottom: 1px dotted #7C837B;
+}
+.case-cta a:hover { color: #5C4A37; }
