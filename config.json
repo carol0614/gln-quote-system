@@ -1,4 +1,4 @@
 {
-  "leadEndpoint": "",
-  "_comment": "把 Google Apps Script Web App 部署網址貼到 leadEndpoint。空字串 = 不送資料（dev mode）。部署 SOP 見 /docs/GAS部署SOP.md。"
+  "leadEndpoint": "https://script.google.com/macros/s/AKfycbz_RCyi3ESORyl7PjEJjJjGJev_AU94Js-oiMUKLvRqcjQlvw8SS56WQvEznSxojDrW/exec",
+  "_comment": "GLN 預算分配表 v1 - 部署於 2026-05-24，寫入 Sheet 1KA6ykh3QmmGggudtqkcZ1mN6mrb1q8rEU5N6euIltTw"
 }
