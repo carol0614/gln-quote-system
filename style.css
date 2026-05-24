@@ -742,6 +742,30 @@ textarea { resize: vertical; min-height: 60px; }
   line-height: 1.75;
   margin-bottom: var(--space-2);
 }
+.team-bio-list {
+  list-style: none;
+  text-align: left;
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto var(--space-2);
+  padding: 0;
+  color: var(--color-ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+.team-bio-list li {
+  position: relative;
+  padding-left: 14px;
+  margin-bottom: 6px;
+}
+.team-bio-list li::before {
+  content: "·";
+  position: absolute;
+  left: 0;
+  color: var(--color-olive);
+  font-weight: 700;
+}
+.team-bio-list li b { color: var(--color-olive-dark); font-weight: 600; }
 .team-link a {
   color: var(--color-olive-dark);
   font-size: 0.92rem;
@@ -750,6 +774,22 @@ textarea { resize: vertical; min-height: 60px; }
   text-underline-offset: 4px;
 }
 .team-link a:hover { color: var(--color-accent); }
+
+.team-awards {
+  width: 100%;
+  margin: var(--space-2) 0 var(--space-2);
+  padding: var(--space-2) 0;
+  border-top: 1px dashed var(--color-line);
+  border-bottom: 1px dashed var(--color-line);
+}
+.team-awards-img {
+  width: 100%;
+  max-width: 360px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  opacity: 0.92;
+}
 
 .team-group {
   margin: 0;
@@ -1392,6 +1432,10 @@ textarea { resize: vertical; min-height: 60px; }
 .callout-warn {
   border-left-color: #C67D5A;
   background: #F8EFE5;
+}
+.callout-recommend {
+  border-left-color: #8E877D;
+  background: #F3F1ED;
 }
 .callout-value {
   border-left-color: #94A88E;

@@ -365,6 +365,28 @@
         </div>`;
     }).join('');
 
+    // ─── 30 年+ 屋齡基本三項建議（除非近 10 年內已更新）───
+    let oldHouseBlock = '';
+    const lastReno = parseInt(meta.lastReno, 10);
+    const recentlyRenovated = Number.isFinite(lastReno) && lastReno > 0 && lastReno <= 10;
+    if (inputs.age >= 30 && !recentlyRenovated) {
+      oldHouseBlock = `
+        <div class="result-callout callout-recommend">
+          <div class="callout-head">
+            <span class="callout-icon">🛠️</span>
+            <h3>30 年+ 屋齡基本工項建議</h3>
+          </div>
+          <p class="callout-lead">您的房屋屋齡 <b>${inputs.age} 年</b>。對於 30 年以上的房屋，<b>以下三項建議都要做</b>：</p>
+          <ol class="callout-list">
+            <li><b>衛浴打除重做</b> ─ 老化的防水層通常已失效，漏水隱患高</li>
+            <li><b>全屋防水重做</b> ─ 衛浴、廚房、陽台、外牆需整體規劃</li>
+            <li><b>管線全換</b> ─ 水管、電線、瓦斯管常已老化或不符現行規範</li>
+          </ol>
+          <p class="callout-foot">💡 本估價已假設這三項都會做。若您近 10 年內已更新過，請在「最近一次裝修」欄位填寫，我們會酌減。</p>
+        </div>
+      `;
+    }
+
     // ─── 預算超出怎麼辦（柔性版，不揭內部倍數）───
     let budgetBlock = '';
     const budgetCap = parseInt(meta.budgetExpected, 10);
@@ -402,6 +424,7 @@
       <p class="result-confidence">${conf.label}　·　${conf.strategy}</p>
       <p class="result-conf-meta">區間寬度 ${conf.lowerPct}% / +${conf.upperPct}%　·　信心分 ${conf.score >= 0 ? '+' : ''}${conf.score}　·　依您填的 5 項條件動態計算</p>
 
+      ${oldHouseBlock}
       ${budgetBlock}
 
       <!-- ② 你的房子摘要 -->

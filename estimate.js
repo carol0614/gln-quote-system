@@ -258,12 +258,9 @@
     const upper = total * (1 + conf.tier.upper_pct / 100);
 
     // 6 大類分區（給結果頁顯示用）
+    // 2026-05-24：split 以 caseType 為 key，5 類各自區分（含 townhouse_mid / townhouse_old）
     const splitRef = params.category_breakdown_ref.main_body_split;
-    const mainBodyGroup = caseType === 'new_house' ? '新成屋'
-                       : caseType === 'midage' ? '中古屋'
-                       : caseType === 'old_house' ? '老屋'
-                       : '透天';
-    const split = splitRef[mainBodyGroup] || splitRef['中古屋'];
+    const split = splitRef[caseType] || splitRef.midage;
     const splitTotal = (split.基礎工程_pct + split.裝修工程_pct);
     const categoryBreakdown = {
       '基礎工程':  round0(mainBody * split.基礎工程_pct / splitTotal),
