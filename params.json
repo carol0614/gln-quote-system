@@ -1,0 +1,189 @@
+{
+  "version": "3.3",
+  "created_at": "2026-05-24",
+  "applies_to": "GLN 老屋翻新 / 中古 / 新成屋 / 預售客變 / 透天（Phase 1）",
+  "currency": "TWD",
+  "unit": "萬",
+  "note": "依 GLN 估價系統 v3 總表（generate_v3_master.py v3.3）重建。9-step 公式，案型參數承擔屋齡折扣。",
+
+  "base_price_per_ping_10k": 7.0,
+
+  "case_type": {
+    "description": "案型參數（單選必答，承擔屋齡折扣）",
+    "options": [
+      { "key": "new_house",       "label": "新成屋 / 預售客變",     "multiplier": 0.80, "force_scale_one": true,  "kitchen_default": false, "bathroom_default": false, "window_default": false, "category": "apartment" },
+      { "key": "midage",          "label": "中古屋（5-25 年，大樓/公寓）", "multiplier": 0.90, "category": "apartment" },
+      { "key": "old_house",       "label": "老屋（25 年+，大樓/公寓）",   "multiplier": 1.10, "category": "apartment" },
+      { "key": "townhouse_mid",   "label": "透天（5-25 年）",        "multiplier": 1.15, "category": "townhouse" },
+      { "key": "townhouse_old",   "label": "透天老屋（25 年+）",     "multiplier": 1.20, "category": "townhouse" }
+    ]
+  },
+
+  "scale_discount": {
+    "description": "規模折扣（依室內坪數）；新成屋強制 ×1.00",
+    "rules": [
+      { "ping_max": 20,   "multiplier": 1.10, "label": "<20 坪" },
+      { "ping_max": 40,   "multiplier": 1.00, "label": "20-40 坪" },
+      { "ping_max": 60,   "multiplier": 0.95, "label": "40-60 坪" },
+      { "ping_max": 9999, "multiplier": 0.90, "label": "60+ 坪" }
+    ]
+  },
+
+  "region_adjustment": {
+    "description": "區域加成（雙北/離島套同標準，桃竹苗/中/南 各自分層）",
+    "zones": [
+      { "key": "tpe",     "label": "雙北 / 基隆",       "counties": ["台北", "新北", "基隆"],           "adjustment_pct": 20, "design_fee_zone": "tpe_outlying" },
+      { "key": "outlying","label": "離島（澎金馬）",     "counties": ["澎湖", "金門", "馬祖"],           "adjustment_pct": 20, "design_fee_zone": "tpe_outlying" },
+      { "key": "tcm",     "label": "桃竹苗",            "counties": ["桃園", "新竹", "苗栗"],           "adjustment_pct": 10, "design_fee_zone": "tcm_central_south" },
+      { "key": "central", "label": "中部",              "counties": ["台中", "彰化", "南投", "雲林"],   "adjustment_pct": 5,  "design_fee_zone": "tcm_central_south" },
+      { "key": "south",   "label": "南部",              "counties": ["嘉義", "台南", "高雄", "屏東"],   "adjustment_pct": 0,  "design_fee_zone": "tcm_central_south" },
+      { "key": "east",    "label": "東部",              "counties": ["宜蘭", "花蓮", "台東"],           "adjustment_pct": 5,  "design_fee_zone": "tcm_central_south" }
+    ]
+  },
+
+  "condition_adjustment": {
+    "description": "屋況加成（可複選，受 cap 限制）",
+    "options": [
+      { "key": "leak",              "label": "漏水修繕",     "adjustment_pct": 8 },
+      { "key": "partial_demolish",  "label": "打部分隔間",   "adjustment_pct": 8 },
+      { "key": "full_demolish",     "label": "全室打除",     "adjustment_pct": 12 },
+      { "key": "structural",        "label": "結構補強",     "adjustment_pct": 10 }
+    ],
+    "cap_pct": 40
+  },
+
+  "style_factor": {
+    "description": "風格倍率（必選 3 選 1，計入估價）",
+    "options": [
+      { "key": "simple",  "label": "簡約有線條",     "multiplier": 0.85, "desc": "預算敏感、實用導向、首購族" },
+      { "key": "local",   "label": "局部設計感",     "multiplier": 1.15, "desc": "GLN 主力客群、平衡型" },
+      { "key": "refined", "label": "強調精緻細節",   "multiplier": 1.30, "desc": "重視美學、預算彈性、二屋換屋" }
+    ]
+  },
+
+  "aircon": {
+    "description": "冷氣 = (房數 + 1) × 4.5 萬/台",
+    "per_unit_10k": 4.5,
+    "rooms_plus_one": true
+  },
+
+  "large_equipment": {
+    "description": "大型設備（複選 checkbox，預設全 N，僅計勾選項目）",
+    "options": [
+      { "key": "hrv",                      "label": "全熱交換器",     "apartment_10k": 10, "townhouse_10k": null, "note": "透天不建議" },
+      { "key": "water_filter",             "label": "全屋淨水",       "apartment_10k": 6,  "townhouse_10k": 8 },
+      { "key": "water_softener",           "label": "全屋軟水",       "apartment_10k": 6,  "townhouse_10k": 8 },
+      { "key": "dehumidifier",             "label": "全棟除濕",       "apartment_10k_per_unit": 4, "townhouse_10k_per_unit": 4, "unit_basis_apartment": "rooms_plus_one", "unit_basis_townhouse": "floors", "note": "大樓依房數+1；透天依樓層數" },
+      { "key": "heat_pump",                "label": "熱泵熱水器",     "apartment_10k": 8,  "townhouse_10k": 10 },
+      { "key": "electric_heater_upgrade",  "label": "電熱水器升級",   "apartment_10k": 3,  "townhouse_10k": 3 },
+      { "key": "solar",                    "label": "太陽能系統",     "apartment_10k": null, "townhouse_10k": 30, "note": "主要透天用" }
+    ]
+  },
+
+  "smart_home": {
+    "description": "智能家電（單選 radio，預設『不需要』）",
+    "options": [
+      { "key": "none",  "label": "不需要",     "apartment_10k": 0,  "townhouse_10k": 0,   "desc": "預設" },
+      { "key": "basic", "label": "入門基礎",   "apartment_10k": 15, "townhouse_10k": 22,  "desc": "照明 + 窗簾" },
+      { "key": "mid",   "label": "中階需求",   "apartment_10k": 27, "townhouse_10k": 60,  "desc": "+ 空調 + 影音" },
+      { "key": "high",  "label": "高階需求",   "apartment_10k": 60, "townhouse_10k": 120, "desc": "+ 中控 + 安防" }
+    ]
+  },
+
+  "kitchen_addon": {
+    "description": "廚房 = 屋齡 < 15 年 強制 0；≥ 15 年依房數 27/35/45 萬",
+    "age_threshold": 15,
+    "rules": [
+      { "rooms": 2,   "amount_10k": 27 },
+      { "rooms": 3,   "amount_10k": 35 },
+      { "rooms": 4,   "amount_10k": 45 }
+    ]
+  },
+
+  "bathroom_addon": {
+    "description": "衛浴 = 屋齡 < 15 年 強制 0；≥ 15 年翻新×15 + 新增×25 萬",
+    "age_threshold": 15,
+    "renovate_per_unit_10k": 15,
+    "add_new_per_unit_10k": 25
+  },
+
+  "window_addon": {
+    "description": "窗戶 = 一般窗 0.8 萬/扇 + 落地窗 3.5 萬/扇；新成屋 5 年內預設 N",
+    "regular_per_unit_10k": 0.8,
+    "balcony_per_unit_10k": 3.5,
+    "new_house_default_off_age": 5
+  },
+
+  "design_fee": {
+    "description": "設計費 = max(室內坪數, 15) × 設計費單價（元/坪）",
+    "min_ping": 15,
+    "rates_per_ping": {
+      "tpe_outlying": {
+        "new_house":   6000,
+        "midage_old":  8000,
+        "note": "雙北 / 基隆 / 離島"
+      },
+      "tcm_central_south": {
+        "new_house":   4500,
+        "midage_old":  7000,
+        "note": "桃竹苗 / 中 / 南 / 東"
+      }
+    },
+    "glv_independent_per_ping": 2500,
+    "self_build": "專案價"
+  },
+
+  "additional_fees": {
+    "supervision_pct": 10,
+    "supervision_base": "engineering_subtotal",
+    "tax_pct": 5,
+    "tax_base": "engineering_subtotal + supervision_fee + design_fee"
+  },
+
+  "confidence": {
+    "description": "5 因素算分 → 動態區間寬度",
+    "factors": {
+      "case_type": {
+        "new_house": 2,
+        "midage": 1,
+        "old_house": -1,
+        "townhouse_mid": -1,
+        "townhouse_old": -2
+      },
+      "condition_count": [
+        { "max_count": 1,  "score": 1 },
+        { "max_count": 3,  "score": 0 },
+        { "max_count": 999, "score": -2 }
+      ],
+      "style": {
+        "simple": 1,
+        "local": 0,
+        "refined": -1
+      },
+      "large_equipment_count": [
+        { "max_count": 2,  "score": 0 },
+        { "max_count": 999, "score": -1 }
+      ],
+      "young_age_bonus": { "age_below": 15, "score": 1 }
+    },
+    "tiers": [
+      { "min_score": 3,   "label": "🟢 高",   "lower_pct": -5,  "upper_pct": 5,  "strategy": "正常顯示，鼓勵直接諮詢", "color": "sage" },
+      { "min_score": 1,   "label": "🟡 中",   "lower_pct": -10, "upper_pct": 5,  "strategy": "正常顯示 + 提示需現勘確認", "color": "highlight" },
+      { "min_score": -1,  "label": "🟠 中低", "lower_pct": -15, "upper_pct": 10, "strategy": "顯示 + 強調建議優先現勘", "color": "ochre" },
+      { "min_score": -999,"label": "🔴 低",   "lower_pct": -20, "upper_pct": 15, "strategy": "顯示但加紅字提醒區間僅供概念", "color": "rose" }
+    ]
+  },
+
+  "category_breakdown_ref": {
+    "description": "結果頁分類顯示用：把計算結果歸到 6 大類（基礎/裝修/冷氣/大設備/廚衛/家具軟裝）。S3 結果頁會用到。",
+    "main_body_split": {
+      "新成屋": { "基礎工程_pct": 18.8, "裝修工程_pct": 71.4, "_source": "v2 統計：新成屋(0-5年) n=2" },
+      "中古屋": { "基礎工程_pct": 34.3, "裝修工程_pct": 40.5, "_source": "v2 統計：中古(5-25年) n=2" },
+      "老屋":   { "基礎工程_pct": 45.8, "裝修工程_pct": 40.5, "_source": "v2 統計：老屋(25+) n=4" },
+      "透天":   { "基礎工程_pct": 35.2, "裝修工程_pct": 51.4, "_source": "v2 統計：透天案件 n=3" }
+    },
+    "_note": "上述比例用於把 Step 2 主體小計拆成『基礎工程』與『裝修工程』兩格顯示；其餘 4 類（冷氣/大設備/廚衛/家具軟裝）直接由 Step 3 計算項對應。"
+  },
+
+  "test_cases_ref": "見 generate_v3_master.py 中 10 個範例（§7）"
+}

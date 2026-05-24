@@ -1,0 +1,220 @@
+{
+  "version": "1.0",
+  "created_at": "2026-05-22",
+  "applies_to": "GLN 老屋翻新 / 新成屋 / 預售屋（Phase 1）",
+  "currency": "TWD",
+  "unit_price_per_ping_in_10k": "萬/坪",
+
+  "base_price_per_ping": {
+    "description": "每坪基準價（萬），依房屋型態 × 屋齡",
+    "rules": [
+      { "house_type": ["預售屋", "新成屋"], "age_min": 0, "age_max": 5, "price": 6.0 },
+      { "house_type": ["公寓華廈", "中古屋", "大樓"], "age_min": 5, "age_max": 20, "price": 6.5 },
+      { "house_type": ["公寓華廈", "中古屋", "大樓"], "age_min": 20, "age_max": 999, "price": 7.0 },
+      { "house_type": ["透天"], "age_min": 5, "age_max": 20, "price": 7.0 },
+      { "house_type": ["透天"], "age_min": 20, "age_max": 999, "price": 7.5 }
+    ]
+  },
+
+  "region_adjustment": {
+    "description": "區域加成百分比",
+    "rules": {
+      "北部": { "counties": ["台北", "新北", "基隆", "桃園", "新竹"], "adjustment_pct": 15 },
+      "中部": { "counties": ["苗栗", "台中", "彰化", "南投", "雲林"], "adjustment_pct": 5 },
+      "南部": { "counties": ["嘉義", "台南", "高雄", "屏東"], "adjustment_pct": 0 },
+      "東部離島": { "counties": ["宜蘭", "花蓮", "台東", "澎湖", "金門", "馬祖"], "adjustment_pct": 10 }
+    }
+  },
+
+  "condition_adjustment": {
+    "description": "屋況加成（疊加，可複選，但受 cap 限制）",
+    "options": [
+      { "key": "leak", "label": "有漏水", "adjustment_pct": 8 },
+      { "key": "wall_cancer", "label": "有壁癌", "adjustment_pct": 5 },
+      { "key": "partial_demolish", "label": "打除部分隔間", "adjustment_pct": 8 },
+      { "key": "full_layout_change", "label": "全部重新配置格局", "adjustment_pct": 15 },
+      { "key": "pipe_replace", "label": "管線需全換", "adjustment_pct": 12 },
+      { "key": "west_facing", "label": "西曬嚴重需隔熱", "adjustment_pct": 5 },
+      { "key": "soundproof", "label": "隔音工程需求", "adjustment_pct": 5 }
+    ],
+    "caps": {
+      "公寓華廈": 35,
+      "大樓": 35,
+      "中古屋": 35,
+      "透天": 45
+    }
+  },
+
+  "scale_discount": {
+    "description": "規模折扣（依室內坪數）",
+    "rules": [
+      { "ping_min": 0, "ping_max": 30, "multiplier": 1.00 },
+      { "ping_min": 31, "ping_max": 50, "multiplier": 0.95 },
+      { "ping_min": 51, "ping_max": 80, "multiplier": 0.85 },
+      { "ping_min": 81, "ping_max": 120, "multiplier": 0.78 },
+      { "ping_min": 121, "ping_max": 9999, "multiplier": 0.72 }
+    ]
+  },
+
+  "bathroom_addon": {
+    "description": "廁所加成（固定金額，萬）",
+    "renovate_existing_per_unit": 20,
+    "add_new_per_unit": 30
+  },
+
+  "kitchen_addon": {
+    "description": "廚房加成（依房數，新成屋免）",
+    "skip_for_new_house": true,
+    "skip_age_threshold": 5,
+    "rules": [
+      { "rooms": 2, "amount_10k": 27, "range_min": 25, "range_max": 30 },
+      { "rooms": 3, "amount_10k": 35, "range_min": 30, "range_max": 40 },
+      { "rooms": 4, "amount_10k": 55, "range_min": 50, "range_max": 60 }
+    ]
+  },
+
+  "design_fee": {
+    "description": "設計費（每坪 TWD），最低收費 60,000 元",
+    "minimum_fee": 60000,
+    "rules": [
+      { "house_type": ["老屋翻新"], "age_min": 20, "fee_per_ping": 8000 },
+      { "house_type": ["中古屋"], "age_min": 5, "age_max": 20, "fee_per_ping": 6000 },
+      { "house_type": ["新成屋"], "fee_per_ping": 4500 },
+      { "house_type": ["預售屋"], "fee_per_ping": 3000 }
+    ]
+  },
+
+  "additional_fees": {
+    "supervision_pct": 10,
+    "supervision_base": "engineering_subtotal",
+    "tax_pct": 5,
+    "tax_base": "engineering_subtotal + supervision_fee + design_fee",
+    "client_display_range_pct": 10
+  },
+
+  "style_factor": {
+    "description": "風格係數（不計入估價，僅留資資訊）",
+    "applied_in_calculation": false,
+    "options": ["北歐", "日式無印", "Wabi-Sabi", "現代簡約", "工業風", "美式", "古典", "商業空間"]
+  },
+
+  "calculation_formula": {
+    "step1_unit_price_per_ping": "base_price × scale_multiplier × (1 + region_adj/100 + Σ condition_adj/100, capped)",
+    "step2_engineering_subtotal": "unit_price × ping_size + bathroom_addon + kitchen_addon",
+    "step3_design_fee": "max(ping_size × fee_per_ping, minimum_fee)",
+    "step4_supervision_fee": "engineering_subtotal × 0.10",
+    "step5_tax": "(engineering_subtotal + design_fee + supervision_fee) × 0.05",
+    "step6_total": "engineering_subtotal + design_fee + supervision_fee + tax",
+    "step7_client_range": "total × (1 ± 0.10)"
+  },
+
+  "test_cases": [
+    {
+      "name": "Case 1: 30 坪 30 年中古大樓 北部 中屋況 3 房",
+      "inputs": {
+        "house_type": "大樓",
+        "age": 30,
+        "ping": 30,
+        "region": "北部",
+        "conditions": ["leak", "partial_demolish"],
+        "rooms": 3,
+        "bathrooms_renovate": 2,
+        "bathrooms_new": 0,
+        "has_kitchen_renovation": true
+      },
+      "expected_outputs": {
+        "unit_price_per_ping_10k": 9.17,
+        "engineering_subtotal_10k": 350,
+        "design_fee_10k": 24,
+        "supervision_fee_10k": 35,
+        "tax_10k": 20.5,
+        "total_10k": 429.5,
+        "client_range_10k": [387, 472]
+      }
+    },
+    {
+      "name": "Case 2: 30 坪 5 年新成屋 南部 無屋況 2 廁無廚",
+      "inputs": {
+        "house_type": "新成屋",
+        "age": 5,
+        "ping": 30,
+        "region": "南部",
+        "conditions": [],
+        "rooms": 3,
+        "bathrooms_renovate": 2,
+        "bathrooms_new": 0,
+        "has_kitchen_renovation": false
+      },
+      "expected_outputs": {
+        "unit_price_per_ping_10k": 6.0,
+        "engineering_subtotal_10k": 220,
+        "design_fee_10k": 13.5,
+        "supervision_fee_10k": 22,
+        "tax_10k": 12.8,
+        "total_10k": 268,
+        "client_range_10k": [241, 295]
+      }
+    },
+    {
+      "name": "Case 3: 50 坪 40 年透天 北部 重屋況 4 房",
+      "inputs": {
+        "house_type": "透天",
+        "age": 40,
+        "ping": 50,
+        "region": "北部",
+        "conditions": ["leak", "full_layout_change", "pipe_replace"],
+        "rooms": 4,
+        "bathrooms_renovate": 3,
+        "bathrooms_new": 0,
+        "has_kitchen_renovation": true
+      },
+      "expected_outputs": {
+        "unit_price_per_ping_10k": 10.69,
+        "engineering_subtotal_10k": 650,
+        "design_fee_10k": 40,
+        "supervision_fee_10k": 65,
+        "tax_10k": 37.75,
+        "total_10k": 793,
+        "client_range_10k": [714, 872]
+      }
+    },
+    {
+      "name": "Case 4: 90 坪 48 年透天 南部 中屋況 4 房",
+      "inputs": {
+        "house_type": "透天",
+        "age": 48,
+        "ping": 90,
+        "region": "南部",
+        "conditions": ["leak", "partial_demolish", "pipe_replace"],
+        "rooms": 4,
+        "bathrooms_renovate": 3,
+        "bathrooms_new": 0,
+        "has_kitchen_renovation": true
+      },
+      "expected_outputs": {
+        "unit_price_per_ping_10k": 7.49,
+        "engineering_subtotal_10k": 789,
+        "design_fee_10k": 72,
+        "supervision_fee_10k": 78.9,
+        "tax_10k": 47.0,
+        "total_10k": 987,
+        "client_range_10k": [888, 1086]
+      }
+    }
+  ],
+
+  "data_source": {
+    "base_price": "30 筆 GLN 過往案例反推 + Carol 業務經驗校正",
+    "region_adj": "案例北南實證",
+    "condition_adj": "Carol 業界經驗",
+    "scale_discount": "Case G/H 校正後業界慣例",
+    "bathroom_kitchen_addon": "Carol 直接指定",
+    "design_fee": "GLN 現行收費標準",
+    "tax_supervision": "業界慣例與法定"
+  },
+
+  "future_phases": {
+    "phase_2": "加入商業空間估價邏輯（單獨係數表）",
+    "ongoing": "每完工一案回填實際單價，每季檢視 30 筆最新案件動態調整基準價"
+  }
+}
