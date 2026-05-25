@@ -85,7 +85,7 @@
     "options": [
       { "key": "none",  "label": "不需要",     "apartment_10k": 0,  "townhouse_10k": 0,   "desc": "預設" },
       { "key": "basic", "label": "入門基礎",   "apartment_10k": 15, "townhouse_10k": 22,  "desc": "照明 + 窗簾" },
-      { "key": "mid",   "label": "中階需求",   "apartment_10k": 27, "townhouse_10k": 60,  "desc": "+ 空調 + 影音" },
+      { "key": "mid",   "label": "中階需求",   "apartment_10k": 27, "townhouse_10k": 60,  "desc": "+ 空調 + 影音", "_review_2026_05_25": "TODO Carol 覆核：透天 60 萬／大樓 27 萬跳幅 +122% 偏高（入門 +47%、高階 +100%）" },
       { "key": "high",  "label": "高階需求",   "apartment_10k": 60, "townhouse_10k": 120, "desc": "+ 中控 + 安防" }
     ]
   },
