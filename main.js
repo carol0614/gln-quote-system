@@ -239,6 +239,7 @@
         name: f.name.value,
         phone: f.phone.value,
         email: f.email.value,
+        lineId: val('lineId'),
         source: f.source.value,
         contactPref: f.contactPref.value,
         referral: f.referral.value,
@@ -546,11 +547,19 @@
         </div>
       </div>
 
-      <!-- ⑨ LINE CTA -->
+      <!-- ⑨ LINE CTA + 隱藏資源 -->
       <div class="result-line-cta">
-        <p class="result-line-title">📩 立即預約精準客製化的規劃方案</p>
-        <p class="result-line-sub">點擊加入官方 LINE，<br>預約免費線上諮詢或現場丈量。</p>
-        <a href="https://lin.ee/YXt0syEs" target="_blank" rel="noopener" class="btn btn-line btn-line-lg">請專人跟我聯絡 →</a>
+        <p class="result-line-eyebrow">🎁 LINE 好友限定</p>
+        <p class="result-line-title">${meta.lineId ? '立即加入官方 LINE 領取隱藏資源' : '加入官方 LINE，再多領一份隱藏資源'}</p>
+        <p class="result-line-sub">${meta.lineId
+          ? `已收到您的 LINE ID <strong>${meta.lineId}</strong>，加好友後將同步推送：`
+          : '加入後告知您填的 LINE ID（或留言「預算分配表」），即可同步收到：'}</p>
+        <ul class="result-line-perks">
+          <li>📕 <strong>老屋翻新 31 項地雷檢核表</strong>（LINE 好友限定，不公開）</li>
+          <li>📞 設計師 <span class="nowrap">24 小時內</span>專人回覆您的客製建議</li>
+          <li>📐 預約免費 <span class="nowrap">30 分鐘</span>線上評估或現場丈量試用</li>
+        </ul>
+        <a href="https://lin.ee/YXt0syEs" target="_blank" rel="noopener" class="btn btn-line btn-line-lg">加入官方 LINE 領取 →</a>
         <p class="result-line-meta">官方 LINE ID：@glninterior　·　0910-859-525</p>
       </div>
 

@@ -1338,6 +1338,48 @@ textarea { resize: vertical; min-height: 60px; }
   color: var(--color-taupe);
   font-family: var(--font-ibarra);
 }
+.result-line-eyebrow {
+  display: inline-block;
+  background: #06C755;
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 10px;
+  letter-spacing: 0.04em;
+}
+.result-line-perks {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-2) auto;
+  max-width: 480px;
+  text-align: left;
+}
+.result-line-perks li {
+  padding: 6px 0;
+  font-size: 0.95rem;
+  color: var(--color-ink);
+  line-height: 1.6;
+}
+
+/* Highlight LINE ID 欄位 — 引導客戶填寫 */
+.field-highlight {
+  background: linear-gradient(135deg, rgba(6, 199, 85, 0.06) 0%, rgba(124, 131, 123, 0.04) 100%);
+  border: 1px dashed rgba(6, 199, 85, 0.35);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+}
+.field-highlight label { color: var(--color-ink); }
+.field-highlight .field-hint {
+  color: var(--color-ink);
+  background: rgba(255, 255, 255, 0.6);
+  padding: 8px 10px;
+  border-radius: 6px;
+  margin-top: 8px;
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
 
 /* ──────────────────────────────────────────────────
    Responsive

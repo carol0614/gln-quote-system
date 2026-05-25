@@ -25,6 +25,7 @@ const NOTIFY_EMAIL       = 'carol@goodlivingnotes.com';
 // ====================================
 
 // 主站完整表單表頭
+// ⚠️ 新欄位請加在「完整 JSON」之前（最末），勿插中間以免錯位既有資料
 const HEADERS = [
   '時間戳記', 'Email', '姓名', '電話', '案型', '屋齡', '坪數', '縣市',
   '預估區間下限(萬)', '預估區間上限(萬)', '預估總價(萬)', '每坪單價(萬)',
@@ -34,7 +35,7 @@ const HEADERS = [
   '大型設備', '智能家電', '上次裝修',
   '喜歡/必要的元素', '想避開', '設計需求', '居住成員', '收納需求', '服務範圍',
   '希望現勘', '其他備註', '認識管道', '聯絡偏好', '推薦碼',
-  '地址', '照片數', '完整 JSON'
+  '地址', '照片數', 'LINE ID', '完整 JSON'
 ];
 
 // 落地頁診斷表頭
@@ -159,7 +160,7 @@ function buildRow(data) {
     meta.designNeeds || '', meta.members || '', meta.storage || '', meta.serviceScope || '',
     meta.siteVisit || '', meta.notes || '',
     meta.source || '', meta.contactPref || '', meta.referral || '',
-    meta.address || '', photoCount,
+    meta.address || '', photoCount, meta.lineId || '',
     JSON.stringify(data)
   ];
 }
@@ -211,7 +212,8 @@ function sendNotification(data) {
     `姓名：${meta.name || ''}`,
     `Email：${meta.email || ''}`,
     `電話：${meta.phone || ''}`,
-    `LINE 偏好聯絡：${meta.contactPref || ''}`,
+    `LINE ID：${meta.lineId || '（未填，後續主動引導加好友）'}`,
+    `偏好聯絡：${meta.contactPref || ''}`,
     ``,
     `案型：${inp.caseType || ''}（屋齡 ${inp.age || ''} 年）`,
     `坪數：${inp.ping || ''}`,
