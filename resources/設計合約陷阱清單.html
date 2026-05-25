@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>設計合約陷阱清單 | Good Living Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Ibarra+Real+Nova:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --olive: #7C837B;
+    --taupe: #8E877D;
+    --cream: #FAF6EE;
+    --mist:  #E7E4DF;
+    --dark:  #3A332B;
+    --brown: #5C4A37;
+    --warn:  #C67D5A;
+    --sage:  #94A88E;
+    --rose:  #C9A4A0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Serif TC', serif;
+    color: var(--dark);
+    background: #fff;
+    line-height: 1.7;
+  }
+  .doc { max-width: 820px; margin: 0 auto; padding: 60px 56px; background: #fff; }
+  .doc-header { padding-bottom: 24px; border-bottom: 2px solid var(--olive); margin-bottom: 32px; }
+  .doc-eyebrow { font-family: 'Ibarra Real Nova', serif; font-size: 12px; letter-spacing: 4px; color: var(--olive); text-transform: uppercase; margin-bottom: 12px; }
+  .doc-title { font-size: 32px; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+  .doc-sub { font-size: 14px; color: var(--taupe); }
+  .doc-intro {
+    background: var(--cream);
+    border-left: 4px solid var(--warn);
+    padding: 18px 22px;
+    margin: 24px 0 32px;
+    font-size: 14.5px;
+    color: var(--brown);
+  }
+  h2 { font-size: 22px; font-weight: 600; color: var(--brown); margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--mist); }
+  .clause {
+    margin: 18px 0;
+    padding: 16px 20px;
+    background: var(--cream);
+    border-left: 4px solid var(--olive);
+    border-radius: 4px;
+  }
+  .clause-num {
+    display: inline-block;
+    background: var(--olive);
+    color: #fff;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-family: 'Ibarra Real Nova', serif;
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+  .clause.high .clause-num { background: var(--warn); }
+  .clause.high { border-left-color: var(--warn); background: #F8EFE5; }
+  .clause-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+  .clause-trap {
+    font-size: 13.5px;
+    color: var(--brown);
+    margin-bottom: 8px;
+  }
+  .clause-fix {
+    font-size: 13.5px;
+    color: var(--dark);
+    background: #fff;
+    padding: 10px 14px;
+    border-radius: 4px;
+    border: 1px solid var(--mist);
+  }
+  .clause-fix b { color: var(--sage); }
+  .clause-case {
+    font-size: 12.5px;
+    font-style: italic;
+    color: var(--taupe);
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--mist);
+  }
+  .risk-label {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-left: 8px;
+    color: #fff;
+  }
+  .risk-high { background: var(--warn); }
+  .risk-mid  { background: #D4A85F; }
+  .risk-low  { background: var(--sage); }
+
+  .summary-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13.5px; }
+  .summary-table th, .summary-table td { padding: 10px 12px; border: 1px solid var(--mist); text-align: left; }
+  .summary-table th { background: var(--olive); color: #fff; font-weight: 600; }
+  .summary-table tr:nth-child(even) td { background: var(--cream); }
+
+  .cta-box {
+    background: linear-gradient(135deg, #F0F2EC 0%, var(--cream) 100%);
+    border: 1px solid var(--sage);
+    border-radius: 8px;
+    padding: 22px;
+    margin: 32px 0;
+    text-align: center;
+  }
+  .cta-box h3 { color: var(--brown); margin-top: 0; }
+  .cta-btn {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 10px 24px;
+    background: var(--sage);
+    color: #fff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .doc-footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--mist); text-align: center; font-size: 12px; color: var(--taupe); }
+  .doc-footer p { margin: 4px 0; }
+  .doc-footer a { color: var(--olive); text-decoration: none; }
+
+  @media print {
+    @page { size: A4; margin: 18mm 15mm; }
+    body { background: #fff; }
+    .doc { padding: 0; max-width: 100%; }
+    .clause { page-break-inside: avoid; }
+    h2 { page-break-after: avoid; }
+    .cta-box { page-break-inside: avoid; }
+    .print-hide { display: none !important; }
+  }
+  .print-bar { background: var(--olive); color: #fff; padding: 10px; text-align: center; font-size: 13px; }
+  .print-bar button { margin-left: 12px; padding: 5px 14px; background: #fff; color: var(--olive); border: none; border-radius: 4px; cursor: pointer; font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="print-bar print-hide">
+  📜 設計合約陷阱清單 v1.0　|　Good Living Notes
+  <button onclick="window.print()">🖨 列印 / 存 PDF</button>
+</div>
+
+<div class="doc">
+  <header class="doc-header">
+    <p class="doc-eyebrow">GLN RESOURCE PACK · v1.0</p>
+    <h1 class="doc-title">設計合約陷阱清單</h1>
+    <p class="doc-sub">簽約前必看的 25 條檢查表，含 GLN 客戶實際遭遇案例。Good Living Notes · 2026</p>
+  </header>
+
+  <div class="doc-intro">
+    <strong>給你的提醒：</strong>裝修糾紛的根源 80% 在合約。
+    我們整理 25 條最常見的合約陷阱，分成設計、工程、付款、保固 4 類，含 ⚠️ 高風險標記與 GLN 推薦寫法。
+    <strong>建議帶這份去找你準備簽的設計公司，逐條對照</strong>——願意配合修約的，才是值得合作的。
+  </div>
+
+  <table class="summary-table">
+    <thead>
+      <tr><th>類別</th><th>條款數</th><th>⚠️ 高風險</th><th>主要爭議</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>📐 設計合約</td><td>6</td><td>2</td><td>圖面交付、改圖次數、退費</td></tr>
+      <tr><td>🔨 工程合約</td><td>9</td><td>4</td><td>追加、進度、變更、驗收</td></tr>
+      <tr><td>💰 付款條件</td><td>5</td><td>2</td><td>分期、發票、違約金</td></tr>
+      <tr><td>🛡️ 保固與責任</td><td>5</td><td>1</td><td>保固範圍、年限、轉嫁</td></tr>
+    </tbody>
+  </table>
+
+  <h2>① 設計合約（6 條）</h2>
+
+  <div class="clause high">
+    <span class="clause-num">1</span><span class="risk-label risk-high">高風險</span>
+    <div class="clause-title">圖面交付清單沒寫清楚</div>
+    <div class="clause-trap">⚠️ <b>陷阱</b>：合約只寫「提供設計圖」，導致設計師交了平面圖就說完成。</div>
+    <div class="clause-fix">✅ <b>GLN 寫法</b>：明列「平面配置圖、立面圖、3D 渲染圖（每空間至少 1 張）、系統櫃圖、水電圖、燈具圖、建材樣板」。</div>
+    <div class="clause-case">實際案例：客戶付了 20 萬設計費，只拿到平面 + 3D 各 1 張，後續找施工方都看不懂。</div>
+  </div>
+
+  <div class="clause high">
+    <span class="clause-num">2</span><span class="risk-label risk-high">高風險</span>
+    <div class="clause-title">改圖次數沒設上限</div>
+    <div class="clause-trap">⚠️ <b>陷阱</b>：合約寫「直到業主滿意」，實際上設計師改 2 次就開始拖延。</div>
+    <div class="clause-fix">✅ <b>GLN 寫法</b>：明列「平面 4 次、3D 2 次、立面 2 次；超過部分每次酌收 NT$ X,XXX」。</div>
+  </div>
+
+  <div class="clause">
+    <span class="clause-num">3</span><span class="risk-label risk-mid">中風險</span>
+    <div class="clause-title">設計階段時程未明列</div>
+    <div class="clause-fix">✅ <b>GLN 寫法</b>：新成屋 4–6 週 / 中古屋 4–8 週 / 老屋 8–12 週，超過酌收延遲費或業主可解約退費。</div>
+  </div>
+
+  <div class="clause">
+    <span class="clause-num">4</span><span class="risk-label risk-mid">中風險</span>
+    <div class="clause-title">著作權歸屬未約定</div>
+    <div class="clause-trap">設計圖完工後業主想拿給別人施工，原設計師主張不行。</div>
+    <div class="clause-fix">✅ <b>GLN 寫法</b>：明列「業主取得完整著作財產權，得自由運用與轉交」，或註明僅限「合作工班」使用。</div>
+  </div>
+
+  <div class="clause">
+    <span class="clause-num">5</span><span class="risk-label risk-low">低風險</span>
+    <div class="clause-title">設計費是否含 5% 稅金</div>
+    <div class="clause-fix">✅ <b>GLN 寫法</b>：報價金額含 / 未含營業稅必須清楚。</div>
+  </div>
+
+  <div class="clause">
+    <span class="clause-num">6</span><span class="risk-label risk-low">低風險</span>
+    <div class="clause-title">解約條件沒寫清楚</div>
+    <div class="clause-fix">✅ <b>GLN 寫法</b>：明列「設計圖完成 30% / 60% / 90% 各階段，業主解約應付比例」。</div>
+  </div>
+
+  <h2>② 工程合約（9 條）</h2>
+
+  <div class="clause high">
+    <span class="clause-num">7</span><span class="risk-label risk-high">高風險</span>
+    <div class="clause-title">追加項目沒書面確認</div>
+    <div class="clause-trap">⚠️ <b>陷阱</b>：口頭講「順便幫我加個層板」，結束時冒出 10 多項追加。</div>
+    <div class="clause-fix">✅ <b>GLN 寫法</b>：明列「所有追加項目須業主簽署『追加同意書』，含項目、金額、工期延長」。</div>
+    <div class="clause-case">實際案例：客戶口頭追加 8 項，結算時 +28 萬，糾紛半年。</div>
+  </div>
+
+  <div class="clause high">
+    <span class="clause-num">8</span><span class="risk-label risk-high">高風險</span>
+    <div class="clause-title">打除後不可預期項目沒明列</div>
+    <div class="clause-trap">⚠️ <b>陷阱</b>：合約只寫工程範圍，打除後發現漏水／管線壞掉，直接漲價。</div>
+    <div class="clause-fix">✅ <b>GLN 寫法</b>：明列「打除後若發現 A 漏水 / B 管線老化 / C 結構問題，需重新討論增項預算，業主有權選擇『修復』或『不修復』」。</div>
+  </div>
+
+  <div class="clause high">
+    <span class="clause-num">9</span><span class="risk-label risk-high">高風險</span>
+    <div class="clause-title">報價單是「總包價」而非「分項計價」</div>
+    <div class="clause-trap">⚠️ <b>陷阱</b>：寫「全部 350 萬」根本看不出每項合不合理。</div>
+    <div class="clause-fix">✅ <b>GLN 寫法</b>：分項列至少 10–20 項（拆除、泥作、水電、防水、磁磚⋯），每項含單價 × 數量 + 小計。</div>
+  </div>
+
+  <div class="clause high">
+    <span class="clause-num">10</span><span class="risk-label risk-high">高風險</span>
+    <div class="clause-title">建材等級未明列品牌型號</div>
+    <div class="clause-trap">⚠️ <b>陷阱</b>：寫「進口磁磚」，實際給的是雜牌大陸貨。</div>
+    <div class="clause-fix">✅ <b>GLN 寫法</b>：每項建材必列品牌 + 型號 + 規格（例：TOTO C796 馬桶 / 義大利 Marazzi 磁磚 60×120）。</div>
+  </div>
+
+  <div class="clause">
+    <span class="clause-num">11</span><span class="risk-label risk-mid">中風險</span>
+    <div class="clause-title">工期延誤罰則</div>
+    <div class="clause-fix">✅ <b>GLN 寫法</b>：超過工期每日罰金 = 總工程款 × 0.05%，但須扣除「業主自身原因」（補件、確認延遲、追加項目）。</div>
+  </div>
+
+  <div class="clause">
+    <span class="clause-num">12</span><span class="risk-label risk-mid">中風險</span>
+    <div class="clause-title">變更工項機制</div>
+    <div class="clause-fix">✅ <b>GLN 寫法</b>：業主／設計師／工班三方都可提出變更，但需另簽變更同意書，含金額、工期影響。</div>
+  </div>
+
+  <div class="clause">
+    <span class="clause-num">13</span><span class="risk-label risk-mid">中風險</span>
+    <div class="clause-title">廢棄物清運費用歸屬</div>
+    <div class="clause-fix">✅ <b>GLN 寫法</b>：明列含 / 不含廢棄物清運。多數設計公司報價不含這一項，事後才算。</div>
+  </div>
+
+  <div class="clause">
+    <span class="clause-num">14</span><span class="risk-label risk-low">低風險</span>
+    <div class="clause-title">保護工程是否含在內</div>
+    <div class="clause-fix">✅ <b>GLN 寫法</b>：明列保護工程範圍（電梯／樓梯／鄰戶／已完工裝修區）+ 金額。</div>
+  </div>
+
+  <div class="clause">
+    <span class="clause-num">15</span><span class="risk-label risk-low">低風險</span>
+    <div class="clause-title">驗收清單沒附</div>
+    <div class="clause-fix">✅ <b>GLN 寫法</b>：合約附件含「完工驗收 30+ 項目清單」，逐項打勾 + 業主簽收。</div>
+  </div>
+
+  <h2>③ 付款條件（5 條）</h2>
+
+  <div class="clause high">
+    <span class="clause-num">16</span><span class="risk-label risk-high">高風險</span>
+    <div class="clause-title">付款分期前重後輕</div>
+    <div class="clause-trap">⚠️ <b>陷阱</b>：訂金 50% + 期款 50%，工班拿了錢就拖工。</div>
+    <div class="clause-fix">✅ <b>GLN 寫法</b>：訂金 30% + 期款 60%（分 3–4 期）+ 尾款 10%（驗收完成後付）。</div>
+  </div>
+
+  <div class="clause high">
+    <span class="clause-num">17</span><span class="risk-label risk-high">高風險</span>
+    <div class="clause-title">沒有正式發票條款</div>
+    <div class="clause-trap">⚠️ <b>陷阱</b>：付了錢只給收據，後續維修權益、報稅都受損。</div>
+    <div class="clause-fix">✅ <b>GLN 寫法</b>：每期付款須出具請款單，該階段尾款結清後開立正式發票。</div>
+  </div>
+
+  <div class="clause">
+    <span class="clause-num">18</span><span class="risk-label risk-mid">中風險</span>
+    <div class="clause-title">業主違約金過高</div>
+    <div class="clause-fix">✅ <b>GLN 寫法</b>：業主／工班違約金應對等。常見不對等：工班違約僅退已付款項；業主違約則需賠 30%+。</div>
+  </div>
+
+  <div class="clause">
+    <span class="clause-num">19</span><span class="risk-label risk-mid">中風險</span>
+    <div class="clause-title">付款是否需通過某階段驗收</div>
+    <div class="clause-fix">✅ <b>GLN 寫法</b>：每期付款前需業主完成「該階段驗收」（含照片 + 簽收）。</div>
+  </div>
+
+  <div class="clause">
+    <span class="clause-num">20</span><span class="risk-label risk-low">低風險</span>
+    <div class="clause-title">匯款帳戶寫公司還是個人</div>
+    <div class="clause-fix">✅ <b>GLN 寫法</b>：匯款帳戶務必為公司戶（含統編）。匯個人戶後續發票、糾紛都會出問題。</div>
+  </div>
+
+  <h2>④ 保固與責任（5 條）</h2>
+
+  <div class="clause high">
+    <span class="clause-num">21</span><span class="risk-label risk-high">高風險</span>
+    <div class="clause-title">保固範圍與年限</div>
+    <div class="clause-trap">⚠️ <b>陷阱</b>：合約只寫「保固 1 年」，沒寫範圍 = 設計公司可推託。</div>
+    <div class="clause-fix">✅ <b>GLN 寫法</b>：明列「保固 1 年含工程項目、非人為損壞、非消耗性物品。後續工本費維修」。</div>
+  </div>
+
+  <div class="clause">
+    <span class="clause-num">22</span><span class="risk-label risk-mid">中風險</span>
+    <div class="clause-title">廠商保固轉嫁</div>
+    <div class="clause-fix">✅ <b>GLN 寫法</b>：磁磚／衛浴／廚具／系統櫃等廠商保固，須轉交業主原廠保固卡與發票。</div>
+  </div>
+
+  <div class="clause">
+    <span class="clause-num">23</span><span class="risk-label risk-mid">中風險</span>
+    <div class="clause-title">工地意外責任歸屬</div>
+    <div class="clause-fix">✅ <b>GLN 寫法</b>：明列「工地師傅須投保勞保 + 工地責任險，意外發生由工班負責」。</div>
+  </div>
+
+  <div class="clause">
+    <span class="clause-num">24</span><span class="risk-label risk-low">低風險</span>
+    <div class="clause-title">鄰損責任</div>
+    <div class="clause-fix">✅ <b>GLN 寫法</b>：施工造成鄰戶損害（噪音、灰塵、漏水），由工程方負責賠償與處理。</div>
+  </div>
+
+  <div class="clause">
+    <span class="clause-num">25</span><span class="risk-label risk-low">低風險</span>
+    <div class="clause-title">爭議處理機制</div>
+    <div class="clause-fix">✅ <b>GLN 寫法</b>：明列「爭議先協商，協商不成由 X 地方法院為第一審管轄法院」。</div>
+  </div>
+
+  <div class="cta-box">
+    <h3>📐 GLN 合約模板可請設計師提供參考</h3>
+    <p>我們的設計／工程合約已內建上述 25 條保護條款，且文字白話易懂。<br>
+       即使你最終沒跟我們合作，也歡迎索取作為比較基準。</p>
+    <a href="https://lin.ee/YXt0syEs" target="_blank" class="cta-btn">加 LINE 索取合約模板 →</a>
+  </div>
+
+  <footer class="doc-footer">
+    <p>© 2026 Good Living Notes · 好感生活提案股份有限公司</p>
+    <p>高雄市前鎮區和平二路 181 巷 1 號　·　台北市中山區八德路二段 176 號 4 樓</p>
+    <p>📞 0910-859-525　·　LINE @glninterior　·　<a href="https://goodlivingnotes.com">goodlivingnotes.com</a></p>
+    <p style="margin-top:12px; font-size:11px;">本文件僅供 GLN 客戶與潛在客戶參考，內容係依 GLN 過往案例經驗整理，不構成法律建議。實際合約簽訂前請諮詢律師。</p>
+  </footer>
+</div>
+</body>
+</html>

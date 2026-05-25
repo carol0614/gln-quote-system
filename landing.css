@@ -1,0 +1,787 @@
+/* ═══════════════════════════════════════════════════════
+   GLN 落地頁 — Stage 1-4 漸進揭露架構
+   對應 報價系統策略報告 v2.0
+   ═══════════════════════════════════════════════════════ */
+
+/* Stage Progress Indicator */
+.stage-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 24px 20px;
+  background: #FAF8F4;
+  border-bottom: 1px solid #E7E2D8;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  flex-wrap: wrap;
+}
+.stage-dot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 24px;
+  background: transparent;
+  color: #8E877D;
+  font-size: 0.85rem;
+  transition: all .3s ease;
+}
+.stage-dot span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #E7E2D8;
+  color: #8E877D;
+  font-family: 'Ibarra Real Nova', serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+.stage-dot b {
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+.stage-dot.active {
+  background: #7C837B;
+  color: #fff;
+}
+.stage-dot.active span {
+  background: #fff;
+  color: #7C837B;
+}
+.stage-dot.done span {
+  background: #94A88E;
+  color: #fff;
+}
+.stage-line {
+  width: 30px;
+  height: 1px;
+  background: #D4CFC6;
+}
+
+/* Stage Sections */
+.stage {
+  display: none;
+  padding: 50px 20px;
+  min-height: calc(100vh - 200px);
+}
+.stage.active {
+  display: block;
+}
+.container-narrow {
+  max-width: 760px;
+  margin: 0 auto;
+}
+.stage-eyebrow {
+  font-family: 'Ibarra Real Nova', serif;
+  font-size: 12px;
+  letter-spacing: 4px;
+  color: #7C837B;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  text-align: center;
+}
+.stage-title {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: #3A332B;
+  text-align: center;
+  margin-bottom: 32px;
+}
+.stage-cta-row {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+.stage-cta-note {
+  text-align: center;
+  font-size: 0.88rem;
+  color: #8E877D;
+  margin-top: 14px;
+}
+.btn-xl {
+  padding: 16px 36px !important;
+  font-size: 1.05rem !important;
+  border-radius: 8px !important;
+}
+
+/* ─── STAGE 1 ─── */
+.stage-1 {
+  background: linear-gradient(135deg, #FAF8F4 0%, #E7E4DF 100%);
+  text-align: center;
+}
+.stage-hook {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: #3A332B;
+  line-height: 1.3;
+  margin: 20px auto 36px;
+  max-width: 760px;
+}
+.stage-hook span {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #5C4A37;
+  margin-top: 8px;
+  letter-spacing: 1px;
+}
+
+/* 3 張前後對比小圖 */
+.ba-thumbs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  max-width: 900px;
+  margin: 0 auto 36px;
+}
+.ba-thumb {
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #E7E2D8;
+}
+.ba-thumb-imgs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  aspect-ratio: 4/3;
+}
+.ba-thumb-img {
+  background: linear-gradient(135deg, #D9D3C7, #E7E2D8);
+  position: relative;
+  overflow: hidden;
+}
+.ba-thumb-img img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  z-index: 1;
+}
+.ba-thumb-img.before::before,
+.ba-thumb-img.after::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  background: rgba(58,51,43,0.7);
+  color: #fff;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-size: 9px;
+  font-weight: 600;
+  z-index: 2;
+}
+.ba-thumb-img.before::before { content: 'BEFORE'; }
+.ba-thumb-img.after::before  { content: 'AFTER'; background: #94A88E; }
+.ba-thumb-cap {
+  padding: 10px 12px;
+  font-size: 0.82rem;
+  color: #5C4A37;
+  margin: 0;
+  text-align: center;
+}
+
+/* ─── STAGE 2：診斷流程 ─── */
+.diag-progress {
+  height: 4px;
+  background: #E7E2D8;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+.diag-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #7C837B, #94A88E);
+  width: 14%;
+  transition: width .4s ease;
+}
+.diag-progress-label {
+  text-align: right;
+  font-size: 0.78rem;
+  color: #8E877D;
+  margin-bottom: 24px;
+}
+
+.diag-step {
+  display: none;
+  border: 1px solid #E7E2D8;
+  background: #fff;
+  border-radius: 10px;
+  padding: 28px;
+  margin-bottom: 18px;
+}
+.diag-step.active {
+  display: block;
+}
+.diag-step legend {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #3A332B;
+  padding: 0 8px;
+  margin-bottom: 4px;
+}
+.q-hint {
+  font-size: 0.88rem;
+  color: #8E877D;
+  margin-bottom: 16px;
+}
+
+.radio-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+}
+.radio-cards-2col {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+.radio-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 16px;
+  background: #FAF8F4;
+  border: 1.5px solid #E7E2D8;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.radio-card input {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  accent-color: #7C837B;
+}
+.radio-card:hover {
+  background: #fff;
+  border-color: #B8B0A2;
+}
+.radio-card:has(input:checked) {
+  background: #fff;
+  border-color: #7C837B;
+  box-shadow: 0 2px 8px rgba(124,131,123,0.15);
+}
+.radio-card span {
+  font-family: 'Noto Serif TC', serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #3A332B;
+  padding-right: 24px;
+}
+.radio-card small {
+  font-size: 0.78rem;
+  color: #8E877D;
+}
+
+.checkbox-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+.checkbox-row label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.92rem;
+  color: #3A332B;
+  cursor: pointer;
+}
+
+.diag-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+  gap: 12px;
+}
+
+/* 教育卡 */
+.edu-card {
+  display: none;
+  background: linear-gradient(135deg, #F0F2EC 0%, #FAF8F4 100%);
+  border-left: 4px solid #94A88E;
+  border-radius: 10px;
+  padding: 28px;
+  margin: 18px 0;
+}
+.edu-card.active {
+  display: block;
+  animation: fadeIn .4s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.edu-mark {
+  display: inline-block;
+  background: #94A88E;
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 14px;
+}
+.edu-card h3 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #3A332B;
+  margin-bottom: 10px;
+}
+.edu-card p {
+  font-size: 0.95rem;
+  color: #3A332B;
+  line-height: 1.75;
+  margin-bottom: 16px;
+}
+.edu-card p b {
+  background: linear-gradient(transparent 60%, #F0E4D0 60%);
+  padding: 0 2px;
+}
+
+/* ─── STAGE 3：粗估報價 ─── */
+.quote-hero {
+  text-align: center;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #FAF8F4 0%, #F0E4D0 100%);
+  border-radius: 14px;
+  margin-bottom: 36px;
+}
+.quote-label {
+  font-size: 0.95rem;
+  color: #5C4A37;
+  margin-bottom: 14px;
+}
+.quote-range {
+  font-family: 'Ibarra Real Nova', serif;
+  font-size: 3.8rem;
+  font-weight: 700;
+  color: #3A332B;
+  margin: 0;
+  line-height: 1.1;
+  letter-spacing: -1px;
+}
+.quote-acc {
+  margin-top: 12px;
+  font-size: 0.92rem;
+  color: #8E877D;
+}
+.quote-acc-dynamic {
+  margin-top: 8px;
+  font-family: 'Ibarra Real Nova', serif;
+  font-size: 0.95rem;
+  color: #7C837B;
+  letter-spacing: 0.3px;
+}
+.quote-range small {
+  font-size: 0.55em;
+  margin-left: 8px;
+  font-weight: 500;
+  color: #5C4A37;
+}
+.quote-special {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #5C4A37;
+  letter-spacing: 1px;
+}
+.quote-special-sub {
+  display: inline-block;
+  margin-top: 10px;
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #7C837B;
+}
+
+.why-diff {
+  background: #fff;
+  border: 1px solid #E7E2D8;
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 32px;
+}
+.why-diff h3 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #3A332B;
+  margin-bottom: 8px;
+}
+.why-diff-lead {
+  font-size: 0.95rem;
+  color: #5C4A37;
+  margin-bottom: 20px;
+  line-height: 1.7;
+}
+.why-diff-lead b {
+  color: #C67D5A;
+}
+.var-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+.var-card {
+  position: relative;
+  padding: 16px 18px 16px 56px;
+  background: #FAF8F4;
+  border-radius: 8px;
+}
+.var-num {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  font-family: 'Ibarra Real Nova', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #7C837B;
+}
+.var-card h4 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #3A332B;
+  margin-bottom: 4px;
+}
+.var-card p {
+  font-size: 0.85rem;
+  color: #5C4A37;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.case-section-title {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #3A332B;
+  margin: 32px 0 16px;
+  text-align: center;
+}
+
+.similar-cases {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.sim-case {
+  background: #fff;
+  border: 1px solid #E7E2D8;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.sim-case-head {
+  background: #FAF8F4;
+  padding: 12px 18px;
+  border-bottom: 1px solid #E7E2D8;
+}
+.sim-case-tag {
+  font-family: 'Noto Serif TC', serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #5C4A37;
+}
+.sim-case-body {
+  padding: 16px 18px;
+}
+.sim-case-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 0.92rem;
+}
+.sim-case-row-actual {
+  border-top: 1px dashed #E7E2D8;
+  margin-top: 4px;
+  padding-top: 12px;
+}
+.sim-case-label {
+  color: #8E877D;
+}
+.sim-case-val {
+  font-family: 'Ibarra Real Nova', serif;
+  font-weight: 600;
+  color: #3A332B;
+}
+.sim-case-val-high { color: #C67D5A; }
+.sim-case-val-low  { color: #6A8F62; }
+.sim-case-reason {
+  font-size: 0.85rem;
+  color: #5C4A37;
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: #FAF8F4;
+  border-radius: 6px;
+  line-height: 1.55;
+}
+
+.gln-pitch {
+  background: #FAF8F4;
+  border-left: 3px solid #7C837B;
+  padding: 16px 22px;
+  margin-bottom: 32px;
+  font-size: 0.92rem;
+  color: #5C4A37;
+  line-height: 1.7;
+}
+.gln-pitch strong { color: #3A332B; }
+
+/* GLN 4 個具體數字 grid */
+.gln-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 14px;
+  margin: 24px 0 32px;
+  padding: 24px;
+  background: #FAF8F4;
+  border-radius: 12px;
+  border: 1px solid #E7E2D8;
+}
+.gln-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 8px 4px;
+}
+.gln-stat-num {
+  font-family: 'Ibarra Real Nova', serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #5C4A37;
+  line-height: 1.1;
+  letter-spacing: -1px;
+}
+.gln-stat-num small {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #7C837B;
+  margin-left: 2px;
+}
+.gln-stat-label {
+  margin-top: 4px;
+  font-size: 0.85rem;
+  color: #8E877D;
+  letter-spacing: 0.5px;
+}
+
+/* 紅熱客 fast lane：視覺刻意輕、不搶主 CTA */
+.fast-lane-note {
+  text-align: center;
+  margin: 18px auto 0;
+  font-size: 0.88rem;
+  color: #8E877D;
+}
+.fast-lane-link {
+  color: #7C837B;
+  font-weight: 500;
+  border-bottom: 1px dotted #7C837B;
+  padding-bottom: 1px;
+  text-decoration: none;
+  transition: color .15s ease;
+}
+.fast-lane-link:hover {
+  color: #5C4A37;
+  border-bottom-style: solid;
+}
+
+/* Stage 3 主視覺下方解鎖按鈕 */
+.btn-quote-unlock {
+  display: inline-block;
+  margin-top: 22px;
+  padding: 14px 28px !important;
+  font-size: 0.95rem !important;
+  border-radius: 8px !important;
+  text-decoration: none;
+}
+
+.resource-tease {
+  background: linear-gradient(135deg, #F0F2EC 0%, #FAF8F4 100%);
+  border: 1px solid #94A88E;
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 24px;
+}
+.resource-tease h3 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #3A332B;
+  margin-bottom: 16px;
+}
+.tease-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.tease-list li {
+  padding: 10px 0;
+  font-size: 0.95rem;
+  color: #3A332B;
+  border-bottom: 1px dashed #D9D3C7;
+}
+.tease-list li:last-child { border-bottom: none; }
+
+/* ─── STAGE 4：LINE 加入 ─── */
+.stage-4 { text-align: center; }
+.qr-block {
+  margin: 32px auto;
+  max-width: 340px;
+}
+.qr-frame {
+  background: #fff;
+  border: 2px solid #7C837B;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1/1;
+}
+.qr-img {
+  max-width: 100%;
+  height: auto;
+}
+.qr-fallback {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #5C4A37;
+}
+.qr-fallback-icon {
+  font-size: 4rem;
+  margin-bottom: 8px;
+}
+.qr-id {
+  font-family: 'Ibarra Real Nova', serif;
+  font-weight: 600;
+  color: #7C837B;
+  margin-top: 8px;
+}
+.qr-meta {
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: #8E877D;
+}
+
+.line-add-cta {
+  margin: 32px 0;
+}
+.line-id {
+  margin-top: 14px;
+  font-size: 0.95rem;
+  color: #5C4A37;
+}
+.line-id b {
+  font-family: 'Ibarra Real Nova', serif;
+  color: #7C837B;
+}
+
+.unlock-block {
+  text-align: left;
+  background: #fff;
+  border-radius: 12px;
+  padding: 28px;
+  margin-top: 32px;
+  border: 1px solid #E7E2D8;
+}
+.unlock-oneliner {
+  margin: 32px auto 0;
+  max-width: 640px;
+  padding: 22px 26px;
+  background: #FAF8F4;
+  border-radius: 12px;
+  border: 1px solid #E7E2D8;
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: #3A332B;
+  text-align: center;
+}
+.unlock-oneliner b {
+  color: #5C4A37;
+  background: linear-gradient(transparent 60%, #F0E4D0 60%);
+  padding: 0 2px;
+}
+.unlock-block h3 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #3A332B;
+  margin-bottom: 18px;
+  text-align: center;
+}
+.unlock-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.unlock-list li {
+  display: flex;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid #F0EDE5;
+}
+.unlock-list li:last-child { border-bottom: none; }
+.unlock-step {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #7C837B;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Ibarra Real Nova', serif;
+  font-weight: 600;
+}
+.unlock-list li.unlock-final .unlock-step {
+  background: #94A88E;
+}
+.unlock-list div b {
+  display: block;
+  font-family: 'Noto Serif TC', serif;
+  font-weight: 600;
+  color: #3A332B;
+  margin-bottom: 4px;
+}
+.unlock-list div p {
+  font-size: 0.88rem;
+  color: #5C4A37;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Landing header */
+.landing-header { position: sticky; top: 0; z-index: 100; }
+
+/* Responsive */
+@media (max-width: 640px) {
+  .stage-hook { font-size: 1.9rem; }
+  .quote-range { font-size: 2.6rem; }
+  .stage-progress { gap: 0; padding: 14px 10px; }
+  .stage-dot { font-size: 0.75rem; padding: 4px 8px; }
+  .stage-dot b { display: none; }
+  .stage-line { width: 12px; }
+  .stage { padding: 30px 16px; }
+  .diag-step { padding: 20px; }
+}
