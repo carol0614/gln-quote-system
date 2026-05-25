@@ -374,8 +374,9 @@
     <form id="form-full" novalidate>
 
       <!-- ─── A. 客戶基本資料 ─── -->
-      <fieldset class="step active" data-step="1">
-        <legend>A. 您的基本資料</legend>
+      <fieldset class="step" data-step="9">
+        <legend>I. 您的基本資料</legend>
+        <p class="step-hint step-hint-unlock">🎁 就差最後一步——填完即可解鎖您的<strong>預算分配建議</strong>與<strong>兩份精選資源</strong>。</p>
 
         <div class="form-grid">
           <div class="field">
@@ -410,15 +411,20 @@
           </div>
         </div>
 
+        <div class="consent-block">
+          <label><input type="checkbox" id="consent1" required> 我同意 GLN 依本表單資料聯繫我以提供預算建議服務 <span class="req">*</span></label>
+          <label><input type="checkbox" id="consent2" required> 我了解此預算建議為初步參考，最終以現勘正式報價為準 <span class="req">*</span></label>
+        </div>
+
         <div class="step-actions">
-          <span></span>
-          <button type="button" class="btn btn-primary btn-next">下一步 →</button>
+          <button type="button" class="btn btn-outline btn-prev">← 上一步</button>
+          <button type="submit" class="btn btn-primary">取得完整預算分配 →</button>
         </div>
       </fieldset>
 
-      <!-- ─── B. 案型與屋齡（v3：案型參數承擔屋齡折扣） ─── -->
-      <fieldset class="step" data-step="2">
-        <legend>B. 案型與屋齡</legend>
+      <!-- ─── A. 案型與屋齡（v3：案型參數承擔屋齡折扣） ─── -->
+      <fieldset class="step active" data-step="1">
+        <legend>A. 案型與屋齡</legend>
         <p class="step-hint">案型決定基礎工程的比重，屋齡決定廚衛是否計入。</p>
 
         <div class="case-type-grid">
@@ -467,14 +473,14 @@
         </div>
 
         <div class="step-actions">
-          <button type="button" class="btn btn-outline btn-prev">← 上一步</button>
+          <span></span>
           <button type="button" class="btn btn-primary btn-next">下一步 →</button>
         </div>
       </fieldset>
 
-      <!-- ─── C. 物件資訊 ─── -->
-      <fieldset class="step" data-step="3">
-        <legend>C. 物件資訊</legend>
+      <!-- ─── B. 物件資訊 ─── -->
+      <fieldset class="step" data-step="2">
+        <legend>B. 物件資訊</legend>
         <p class="step-hint">坪數會影響規模折扣，地點會影響區域加成。</p>
 
         <div class="form-grid">
@@ -581,8 +587,8 @@
       </fieldset>
 
       <!-- ─── D. 屋況勾選（v3：4 項，cap +40%） ─── -->
-      <fieldset class="step" data-step="4">
-        <legend>D. 屋況勾選</legend>
+      <fieldset class="step" data-step="3">
+        <legend>C. 屋況勾選</legend>
         <p class="step-hint">就您目前知道的屋況勾選；若不確定可保留空白，現勘時補確認。勾選越多代表變數越多，信心度會下降。</p>
 
         <div class="checklist">
@@ -599,8 +605,8 @@
       </fieldset>
 
       <!-- ─── E. 廚衛配置 + 窗戶（v3：屋齡<15 強制 N） ─── -->
-      <fieldset class="step" data-step="5">
-        <legend>E. 廚衛配置與窗戶</legend>
+      <fieldset class="step" data-step="4">
+        <legend>D. 廚衛配置與窗戶</legend>
         <p class="step-hint">廁所翻新 15 萬/間、新增 25 萬/間；廚房依房數 27/35/45 萬。<strong>屋齡 &lt; 15 年系統自動歸 0</strong>，不需勾選。</p>
 
         <div class="form-grid">
@@ -642,8 +648,8 @@
       </fieldset>
 
       <!-- ─── F. 設計風格層級（v3：3 選 1 必選，計入預算分配計算） ─── -->
-      <fieldset class="step" data-step="6">
-        <legend>F. 設計風格層級</legend>
+      <fieldset class="step" data-step="5">
+        <legend>E. 設計風格層級</legend>
         <p class="step-hint">這個選擇會影響每坪價（材料／工法／細節密度差異）。請依您對「最終呈現」的期待選一個。</p>
 
         <div class="style-level-grid">
@@ -696,8 +702,8 @@
       </fieldset>
 
       <!-- ─── G. 設備配備（v3 新增：大設備 checkbox + 智能家電 radio） ─── -->
-      <fieldset class="step" data-step="7">
-        <legend>G. 設備配備</legend>
+      <fieldset class="step" data-step="6">
+        <legend>F. 設備配備</legend>
         <p class="step-hint">這些項目預設都不勾，僅計入您需要的。透天的部分品項價格較高。</p>
 
         <h4 class="sub-block-title">大型設備（複選）</h4>
@@ -773,8 +779,8 @@
       </fieldset>
 
       <!-- ─── H. 預算與時程（原 G，重新編號為 8） ─── -->
-      <fieldset class="step" data-step="8">
-        <legend>H. 預算、時程與設計需求</legend>
+      <fieldset class="step" data-step="7">
+        <legend>G. 預算、時程與設計需求</legend>
 
         <div class="form-grid">
           <div class="field">
@@ -814,8 +820,8 @@
       </fieldset>
 
       <!-- ─── I. 居住需求 + 服務範圍 + 同意（重新編號為 9） ─── -->
-      <fieldset class="step" data-step="9">
-        <legend>I. 居住需求與服務範圍</legend>
+      <fieldset class="step" data-step="8">
+        <legend>H. 居住需求與服務範圍</legend>
 
         <div class="form-grid">
           <div class="field">
@@ -859,14 +865,9 @@
           </div>
         </div>
 
-        <div class="consent-block">
-          <label><input type="checkbox" id="consent1" required> 我同意 GLN 依本表單資料聯繫我以提供預算建議服務 <span class="req">*</span></label>
-          <label><input type="checkbox" id="consent2" required> 我了解此預算建議為初步參考，最終以現勘正式報價為準 <span class="req">*</span></label>
-        </div>
-
         <div class="step-actions">
           <button type="button" class="btn btn-outline btn-prev">← 上一步</button>
-          <button type="submit" class="btn btn-primary">取得完整預算分配 →</button>
+          <button type="button" class="btn btn-primary btn-next">下一步 →</button>
         </div>
       </fieldset>
 

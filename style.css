@@ -302,6 +302,20 @@ legend {
   margin-bottom: var(--space-3);
   font-style: italic;
 }
+.step-hint-unlock {
+  font-style: normal;
+  background: linear-gradient(135deg, #FAF6EE 0%, #F1ECE0 100%);
+  border: 1px solid #E5DDC8;
+  border-radius: 10px;
+  padding: 14px 18px;
+  color: #4A4036;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  letter-spacing: 0.3px;
+}
+.step-hint-unlock strong {
+  color: #8B6F3D;
+}
 
 /* ──────────────────────────────────────────────────
    Form Grid
