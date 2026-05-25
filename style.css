@@ -57,6 +57,36 @@ h1, h2, h3, h4 {
 a { color: var(--color-olive-dark); text-decoration: none; }
 a:hover { color: var(--color-ink); }
 
+/* ═══════════════════════════════════════════════════════
+   中文排版規範（CJK Typography）— 全站套用
+   依據：_setup/中文排版規範.md
+   ═══════════════════════════════════════════════════════ */
+
+/* 1. 標題自動平衡換行（避免末行孤字、不對稱）*/
+h1, h2, h3, h4, h5, h6,
+.section-header p,
+.callout-head h3 {
+  text-wrap: balance;
+}
+
+/* 2. 段落避免孤字（避免最後一行只剩 1-2 個字符）*/
+p, li, dd, .field-hint, .step-hint,
+.callout-lead, .callout-foot, .resource-card p {
+  text-wrap: pretty;
+}
+
+/* 3. 工具類：禁止換行（用於價格 + 單位、品牌名稱、數字組合）*/
+.nowrap {
+  white-space: nowrap;
+  display: inline-block;
+}
+
+/* 4. CJK 短語語意鎖（避免「45 坪以上、透天」斷在「、」後）*/
+.cjk-phrase {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
 .container {
   max-width: 920px;
   margin: 0 auto;
@@ -209,10 +239,13 @@ a:hover { color: var(--color-ink); }
   color: var(--color-ink-soft);
   opacity: 0.78;
   margin-top: 8px;
-  line-height: 1.65;
-  max-width: 580px;
+  line-height: 1.7;
+  max-width: 640px;
   margin-left: auto;
   margin-right: auto;
+  text-wrap: pretty;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 /* ──────────────────────────────────────────────────
@@ -644,8 +677,22 @@ textarea { resize: vertical; min-height: 60px; }
   border-bottom: 1px dashed var(--color-line);
 }
 .process-fee small { color: var(--color-taupe); font-size: 0.85rem; display: block; margin-top: 4px; }
-.process-fee .fee-row { display: block; margin-bottom: 4px; }
-.process-fee .fee-row b { color: var(--color-olive-dark); font-weight: 600; }
+.process-fee .fee-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 10px;
+  margin-bottom: 6px;
+  word-break: keep-all;
+}
+.process-fee .fee-row b {
+  color: var(--color-olive-dark);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.process-fee .fee-row .fee-label {
+  white-space: nowrap;
+}
 .process-step ul {
   list-style: none;
   font-size: 0.9rem;
