@@ -1086,6 +1086,41 @@ textarea { resize: vertical; min-height: 60px; }
 }
 .contact-card-line .contact-cta { color: #06C755; }
 
+/* 社群媒體圖示列（聯繫我們 ↔ 立即預約 中間） */
+.social-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-4);
+  margin: var(--space-4) 0 var(--space-3);
+  padding: var(--space-2) 0;
+}
+.social-icons a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  color: var(--color-olive);
+  border-radius: 50%;
+  transition: color 0.25s ease, transform 0.25s ease, background 0.25s ease;
+}
+.social-icons a:hover {
+  color: var(--color-olive-dark);
+  background: rgba(124, 131, 123, 0.08);
+  transform: translateY(-2px);
+}
+.social-icons svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+@media (max-width: 480px) {
+  .social-icons { gap: var(--space-3); }
+  .social-icons a { width: 38px; height: 38px; }
+  .social-icons svg { width: 20px; height: 20px; }
+}
+
 /* Booking row */
 .booking-row {
   background: #fff;
