@@ -7,13 +7,18 @@
   'use strict';
 
   // ────────────────────────────────────────────────
-  // 載入 params
+  // 載入 params + config（GAS 端點）
   // ────────────────────────────────────────────────
   let PARAMS = null;
+  let _leadEndpoint = null;
   fetch('params.json')
     .then(r => r.json())
     .then(json => { PARAMS = json; })
     .catch(err => console.error('[GLN] params.json 載入失敗', err));
+  fetch('config.json')
+    .then(r => r.json())
+    .then(cfg => { _leadEndpoint = cfg.leadEndpoint || null; })
+    .catch(() => {});
 
   // ────────────────────────────────────────────────
   // Stage 切換
@@ -179,6 +184,7 @@
     e.preventDefault();
     if (!validateQ(currentQ)) return;
     renderQuote();
+    sendLandingLead();  // 診斷資料靜默送 GAS，不阻擋 UX
     goStage(3);
   });
 
@@ -261,6 +267,42 @@
     } else if (accEl) {
       accEl.textContent = '';
     }
+  }
+
+  // ────────────────────────────────────────────────
+  // 落地頁診斷資料送 GAS（靜默，不阻擋 UX）
+  // ────────────────────────────────────────────────
+  function sendLandingLead() {
+    if (!_leadEndpoint) return;
+    const f = diagForm;
+    const ping  = parseFloat(f.ping?.value)  || null;
+    const age   = parseInt(f.age?.value, 10) || null;
+    const houseForm = f.querySelector('input[name="houseForm"]:checked')?.value || null;
+    const county    = f.querySelector('input[name="county"]:checked')?.value    || null;
+    const worry     = f.querySelector('input[name="worry"]:checked')?.value     || null;
+    const moveIn    = f.querySelector('input[name="moveIn"]:checked')?.value    || null;
+    const budget    = f.querySelector('input[name="budget"]:checked')?.value    || null;
+
+    // 算粗估供 GAS 紀錄
+    let quoteLow = null, quoteHigh = null;
+    if (ping && houseForm && age !== null) {
+      const r = computeQuote(ping, houseForm, age);
+      if (r && !r.special) { quoteLow = r.lower; quoteHigh = r.upper; }
+    }
+
+    const payload = {
+      source: 'landing',
+      submittedAt: new Date().toISOString(),
+      ping, age, houseForm, county, worry, moveIn, budget,
+      quoteLow, quoteHigh
+    };
+
+    fetch(_leadEndpoint, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).catch(() => {});  // 失敗靜默，不影響使用者
   }
 
 })();
