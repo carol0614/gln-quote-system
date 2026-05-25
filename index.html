@@ -425,7 +425,7 @@
       <!-- ─── A. 案型與屋齡（v3：案型參數承擔屋齡折扣） ─── -->
       <fieldset class="step active" data-step="1">
         <legend>A. 案型與屋齡</legend>
-        <p class="step-hint">案型決定基礎工程的比重，屋齡決定廚衛是否計入。</p>
+        <p class="step-hint">不同案型的工程範疇不同，屋齡也會影響工項範圍。</p>
 
         <div class="case-type-grid">
           <label class="case-card">
@@ -459,7 +459,6 @@
           <div class="field">
             <label>屋齡（年）<span class="req">*</span></label>
             <input type="number" name="age" min="0" max="100" required>
-            <p class="field-hint">屋齡 &lt; 15 年自動不計廚衛加成。</p>
           </div>
           <div class="field">
             <label>樓層數（透天用）</label>
@@ -481,7 +480,7 @@
       <!-- ─── B. 物件資訊 ─── -->
       <fieldset class="step" data-step="2">
         <legend>B. 物件資訊</legend>
-        <p class="step-hint">坪數會影響規模折扣，地點會影響區域加成。</p>
+        <p class="step-hint">坪數與地點都會影響預算估算。</p>
 
         <div class="form-grid">
           <div class="field">
@@ -607,7 +606,7 @@
       <!-- ─── E. 廚衛配置 + 窗戶（v3：屋齡<15 強制 N） ─── -->
       <fieldset class="step" data-step="4">
         <legend>D. 廚衛配置與窗戶</legend>
-        <p class="step-hint">廁所翻新 15 萬/間、新增 25 萬/間；廚房依房數 27/35/45 萬。<strong>屋齡 &lt; 15 年系統自動歸 0</strong>，不需勾選。</p>
+        <p class="step-hint">請依實際情況填寫；屋況不同工項範圍也會不同，現勘後可進一步確認。</p>
 
         <div class="form-grid">
           <div class="field">
@@ -624,12 +623,10 @@
               <label><input type="radio" name="kitchen" value="yes" checked> 是</label>
               <label><input type="radio" name="kitchen" value="no"> 否</label>
             </div>
-            <p class="field-hint">※ 新成屋／屋齡 &lt; 15 年自動視為「否」（建商已附／不需翻新）。</p>
           </div>
         </div>
 
         <h4 class="sub-block-title">更換窗戶</h4>
-        <p class="step-hint">新成屋 5 年內預設 0，可手動調整。</p>
         <div class="form-grid">
           <div class="field">
             <label>一般窗扇數</label>
