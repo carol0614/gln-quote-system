@@ -1697,6 +1697,10 @@ textarea { resize: vertical; min-height: 60px; }
   border-left-color: #94A88E;
   background: #F0F2EC;
 }
+.callout-glv {
+  border-left-color: #A87D5A;
+  background: #FAF5EE;
+}
 .callout-head {
   display: flex;
   align-items: center;

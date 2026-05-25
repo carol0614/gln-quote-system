@@ -437,6 +437,28 @@
       `;
     }
 
+    // ─── GLV 推薦（新成屋總價 < GLN 接案門檻 150 萬）───
+    let glvBlock = '';
+    const GLN_MIN_PROJECT = 150;
+    if (inputs.caseType === 'new_house' && result.total < GLN_MIN_PROJECT) {
+      glvBlock = `
+        <div class="result-callout callout-glv">
+          <div class="callout-head">
+            <span class="callout-icon">💡</span>
+            <h3>考慮我們的姐妹品牌 GLV</h3>
+          </div>
+          <p class="callout-lead">您的預估總價 <b>${fmt(result.total)} 萬</b>，低於 GLN 設計工程最低接案門檻 <b><span class="nowrap">${GLN_MIN_PROJECT} 萬</span></b>。</p>
+          <p class="callout-lead"><strong>GLV</strong> 是 GLN 旗下的全屋訂製系統櫃品牌——無最低坪數限制、無 <span class="nowrap">150 萬</span>門檻，保留好感的工法與品質：</p>
+          <ul class="value-list">
+            <li>✅ 全屋訂製方案 <span class="nowrap">NT$ 50 萬</span> 起</li>
+            <li>✅ 歐美精緻系統櫃 <span class="nowrap">NT$ 30 萬</span> 起</li>
+            <li>✅ 全程 GLN 同一團隊監工，品質一致</li>
+          </ul>
+          <p class="callout-foot">💡 加入官方 LINE <strong>@glninterior</strong> 並告知客服「想了解 GLV 系統櫃方案」，我們會安排 GLV 設計師專人接洽。</p>
+        </div>
+      `;
+    }
+
     // ─── 信心度 reasons ───
     const reasonHtml = (conf.reasons || []).map(r => {
       const sign = r.score > 0 ? '+' : '';
@@ -460,6 +482,7 @@
 
       ${oldHouseBlock}
       ${budgetBlock}
+      ${glvBlock}
 
       <!-- ② 你的房子摘要 -->
       <div class="result-section">
@@ -555,7 +578,7 @@
           ? `已收到您的 LINE ID <strong>${meta.lineId}</strong>，加好友後將同步推送：`
           : '加入後告知您填的 LINE ID（或留言「預算分配表」），即可同步收到：'}</p>
         <ul class="result-line-perks">
-          <li>📕 <strong>老屋翻新 31 項地雷檢核表</strong>（LINE 好友限定，不公開）</li>
+          <li>📕 <strong>必檢測工程清單</strong>（依您的案型客製，LINE 好友限定）</li>
           <li>📞 設計師 <span class="nowrap">24 小時內</span>專人回覆您的客製建議</li>
           <li>📐 預約免費 <span class="nowrap">30 分鐘</span>線上評估或現場丈量試用</li>
         </ul>
