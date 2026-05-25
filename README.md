@@ -1,6 +1,7 @@
-# GLN 線上估價系統 — Web 前端
+# GLN 線上預算分配系統 — Web 前端
 
 > 對應 `../估價系統_規格書_v1.md`（v1.2）+ `../估價系統_係數參數_v1.json`
+> 註：父目錄與規格文件檔名為歷史命名，前端 UI 與報告全面採用「預算分配 / 預算建議」用語。
 > 本資料夾包含可獨立部署的靜態網站。
 
 ---
@@ -81,10 +82,10 @@ gln-quote-system
 | # | 項目 | 阻塞 |
 |---|---|---|
 | 1 | 串接 Google Apps Script Web App | 表單送出後 POST 到 Apps Script，寫入 Google Sheet + 寄 PDF |
-| 2 | PDF 報告範本（Google Docs） | 含 LOGO、估價區間、Cost Breakdown、屋況加成、CTA |
+| 2 | PDF 報告範本（Google Docs） | 含 LOGO、預算分配區間、Cost Breakdown、屋況加成、CTA |
 | 3 | 風格參考圖（F1 各風格代表圖） | 上傳到 web/img/styles/ 並在表單中以縮圖呈現 |
-| 4 | GLV 系統櫃導流連結 | 等 GLV 估價系統建好後加 link |
-| 5 | Phase 2：商業空間估價邏輯 | 等 Carol 提供商業空間係數 |
+| 4 | GLV 系統櫃導流連結 | 等 GLV 預算分配系統建好後加 link |
+| 5 | Phase 2：商業空間預算分配邏輯 | 等 Carol 提供商業空間係數 |
 
 ---
 

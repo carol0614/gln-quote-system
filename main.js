@@ -1,5 +1,5 @@
 /**
- * GLN 線上估價系統 — 前端邏輯 v3.3
+ * GLN 線上預算分配系統 — 前端邏輯 v3.3
  * 對應 estimate.js v3.3 + params.json v3.3
  */
 
@@ -262,7 +262,7 @@
   }
 
   // ────────────────────────────────────────────────
-  // 顯示結果 Modal（S2 暫時相容版；S3 會重編 6 分類分區）
+  // 顯示結果 Modal — 預算分配建議報告
   // ────────────────────────────────────────────────
   const modal = document.getElementById('result-modal');
   const resultBody = document.getElementById('result-body');
@@ -595,7 +595,7 @@
       const result = GLNEstimate.estimate(PARAMS, inputs);
       sendLead(inputs, result); // fire-and-forget，不擋 UI
       showResult(inputs, result, false);
-      console.log('[GLN] 完整估價：', { inputs, result });
+      console.log('[GLN] 完整預算分配：', { inputs, result });
     } catch (err) {
       console.error(err);
       alert('預算分配計算失敗：' + err.message);

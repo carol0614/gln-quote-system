@@ -1,6 +1,6 @@
 /**
- * GLN 線上估價計算引擎 v3.3
- * 對應 GLN 估價系統 v3 總表（generate_v3_master.py v3.3）
+ * GLN 線上預算分配計算引擎 v3.3
+ * 對應 GLN 預算分配系統 v3 總表（generate_v3_master.py v3.3）
  *
  * 9-Step 公式：
  *   1. 每坪單價 = 7 × 案型參數 × 規模折扣 × 風格倍率 × (1 + 區域% + 屋況%)
