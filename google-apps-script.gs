@@ -370,3 +370,55 @@ function generateMonthlyStats() {
     Logger.log(`月報 Email 已寄出：${subject}`);
   }
 }
+
+// ────────────────────────────────────────────────
+// 一鍵建立／重建「摘要」分頁（含 3 個自動分級欄位）
+// 使用方式：在 Apps Script 編輯器選此函式 → 按「執行」→ 授權 → 完成
+// ────────────────────────────────────────────────
+function setupSummarySheet() {
+  const ss = SpreadsheetApp.openById(SHEET_ID);
+  let sheet = ss.getSheetByName('摘要');
+  if (!sheet) {
+    sheet = ss.insertSheet('摘要', 0);
+  } else {
+    sheet.clear();
+    sheet.clearConditionalFormatRules();
+  }
+
+  // ① 基礎資料 QUERY（A1，拉 15 欄含分級用的隱性欄位）
+  const queryFormula = '=QUERY({\'線索\'!A:AS}, "SELECT Col1, Col3, Col4, Col45, Col5, Col43, Col34, Col6, Col7, Col11, Col15, Col9, Col18, Col19, Col39 WHERE Col1 IS NOT NULL ORDER BY Col1 DESC LABEL Col1 \'時間\', Col3 \'姓名\', Col4 \'電話\', Col45 \'LINE ID\', Col5 \'案型\', Col43 \'建案/地址\', Col34 \'設計需求\', Col6 \'屋齡\', Col7 \'坪數\', Col11 \'預估總價(萬)\', Col15 \'期待預算(萬)\', Col9 \'估價下限(萬)\', Col18 \'入住月\', Col19 \'屋況加成\', Col39 \'備註\'", 1)';
+  sheet.getRange('A1').setFormula(queryFormula);
+
+  // ② 紅旗計數（P1）— 結構/管線、期待 vs 風險、期程壓縮 三項可自動判斷
+  const flagFormula = '={"🚩 紅旗"; ARRAYFORMULA(IF(A2:A="", "", IF(REGEXMATCH(N2:N&"", "full_demolish|structural"), 1, 0) + IF((K2:K>0)*(L2:L>0)*(K2:K<L2:L*0.8), 1, 0) + IF((M2:M<>"")*(IFERROR(DATEVALUE(M2:M&"-01"), 0)-TODAY()<180)*(IFERROR(DATEVALUE(M2:M&"-01"), 0)-TODAY()>0), 1, 0)))}';
+  sheet.getRange('P1').setFormula(flagFormula);
+
+  // ③ 分級（Q1）— 依 2026 目標客戶分級表
+  const gradeFormula = '={"🎯 分級"; ARRAYFORMULA(IF(A2:A="", "", IF(J2:J>=1000, "🚨 必轉 Carol", IF(((E2:E="new_house")*(J2:J<100))+(((E2:E<>"new_house")*(E2:E<>""))*(J2:J<150))>=1, "D 轉 GLV", IF(J2:J<400, "C 訓練組", IF(P2:P>=2, "B 必轉設計總監", IF(J2:J>=700, "A+ 頂級", "A 主力")))))))}';
+  sheet.getRange('Q1').setFormula(gradeFormula);
+
+  // ④ 建議行動（R1）
+  const actionFormula = '={"🚦 建議行動"; ARRAYFORMULA(IF(A2:A="", "", IF(Q2:Q="🚨 必轉 Carol", "Carol／Hank 24h 內親自聯絡", IF(Q2:Q="B 必轉設計總監", "設計總監 + Carol 預先過案", IF(Q2:Q="A+ 頂級", "主力設計師 24h 內接洽 + 預約丈量", IF(Q2:Q="A 主力", "主力設計師 48h 內接洽", IF(Q2:Q="C 訓練組", "訓練組設計師 72h 內接洽", IF(Q2:Q="D 轉 GLV", "婉拒並推 GLV 系統櫃方案", "—"))))))))}';
+  sheet.getRange('R1').setFormula(actionFormula);
+
+  // 標題列樣式
+  sheet.setFrozenRows(1);
+  sheet.getRange('A1:R1').setFontWeight('bold').setBackground('#7C837B').setFontColor('#FFFFFF');
+
+  // 條件式格式（依分級整列染色）
+  const formatRange = sheet.getRange('A2:R1000');
+  const rules = [
+    SpreadsheetApp.newConditionalFormatRule().whenFormulaSatisfied('=$Q2="🚨 必轉 Carol"').setBackground('#FFCDD2').setRanges([formatRange]).build(),
+    SpreadsheetApp.newConditionalFormatRule().whenFormulaSatisfied('=$Q2="B 必轉設計總監"').setBackground('#FFE0B2').setRanges([formatRange]).build(),
+    SpreadsheetApp.newConditionalFormatRule().whenFormulaSatisfied('=$Q2="A+ 頂級"').setBackground('#C8E6C9').setRanges([formatRange]).build(),
+    SpreadsheetApp.newConditionalFormatRule().whenFormulaSatisfied('=$Q2="A 主力"').setBackground('#E8F5E9').setRanges([formatRange]).build(),
+    SpreadsheetApp.newConditionalFormatRule().whenFormulaSatisfied('=$Q2="C 訓練組"').setBackground('#E3F2FD').setRanges([formatRange]).build(),
+    SpreadsheetApp.newConditionalFormatRule().whenFormulaSatisfied('=$Q2="D 轉 GLV"').setBackground('#F5F5F5').setRanges([formatRange]).build()
+  ];
+  sheet.setConditionalFormatRules(rules);
+
+  // 自動調整欄寬
+  sheet.autoResizeColumns(1, 18);
+
+  Logger.log('✅ 摘要分頁建立完成');
+}
