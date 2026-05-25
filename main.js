@@ -485,7 +485,35 @@
         <p class="callout-foot">💡 收費目的是<b>確保雙方有誠意合作</b>，並保障已簽約客戶的服務品質（設計師 90% 工時須留給簽約客戶）。</p>
       </div>
 
-      <!-- ⑧ LINE CTA -->
+      <!-- ⑧ 解鎖資源（gated PDFs，填完表單後解鎖） -->
+      <div class="result-unlocked">
+        <div class="unlocked-head">
+          <span class="unlocked-icon">🎁</span>
+          <h3>感謝您完成估價，為您解鎖 2 份精選資源</h3>
+          <p class="unlocked-sub">由 GLN 17 年實戰經驗整理，限完成估價的屋主取得。</p>
+        </div>
+        <div class="unlocked-grid">
+          <a href="https://canva.link/j3xqsy8targlex8" target="_blank" rel="noopener" class="unlocked-card">
+            <span class="unlocked-tag">老屋翻新</span>
+            <h4>老屋翻新／自地自建精華版</h4>
+            <ul class="unlocked-bullets">
+              <li>什麼是翻新必做工程項目？</li>
+              <li>翻新預備與 2026 最新預算配置</li>
+              <li>翻新結構補強還是重建？</li>
+              <li>自地自建費用與時程</li>
+            </ul>
+            <span class="unlocked-cta">立即查看 →</span>
+          </a>
+          <a href="https://canva.link/jmde00ye6wnhj1y" target="_blank" rel="noopener" class="unlocked-card">
+            <span class="unlocked-tag">補助申請</span>
+            <h4>2026 老宅延壽補助申請懶人包</h4>
+            <p class="unlocked-desc">最新申請條件、可補助金額、流程與所需文件一次看完。GLN 承接案件可免費協助評估資格。</p>
+            <span class="unlocked-cta">立即查看 →</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- ⑨ LINE CTA -->
       <div class="result-line-cta">
         <p class="result-line-title">📩 立即預約精準客製化的規劃方案</p>
         <p class="result-line-sub">點擊加入官方 LINE，<br>預約免費線上諮詢或現場丈量。</p>
@@ -497,7 +525,7 @@
         <button class="btn btn-outline" onclick="document.getElementById('result-modal').hidden = true">關閉視窗</button>
       </div>
 
-      <!-- ⑨ 免責 -->
+      <!-- ⑩ 免責 -->
       <p class="result-disclaimer">
         ⚠️ 本估價為初步參考區間，最終報價以現場勘查後正式報價單為準。<br>
         區間係依您填寫的資料 + GLN 過往案例反推之每坪基準價推算，實際金額可能因屋況、材料庫存、施工難度而調整。<br>

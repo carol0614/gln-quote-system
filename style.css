@@ -1514,6 +1514,134 @@ textarea { resize: vertical; min-height: 60px; }
 }
 
 /* ═══════════════════════════════════════════════════════
+   解鎖資源（Modal 結尾 gated PDFs）
+   ═══════════════════════════════════════════════════════ */
+
+.result-unlocked {
+  margin: 24px 0;
+  padding: 24px 22px;
+  background: linear-gradient(135deg, #FAF6EE 0%, #F3EFE5 100%);
+  border: 1px solid #E5DDC8;
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+}
+.result-unlocked::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 120px; height: 120px;
+  background: radial-gradient(circle at top right, rgba(196, 158, 105, 0.12), transparent 70%);
+  pointer-events: none;
+}
+.unlocked-head {
+  text-align: center;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px dashed #D9CFB6;
+}
+.unlocked-icon {
+  font-size: 1.8rem;
+  display: block;
+  margin-bottom: 6px;
+}
+.unlocked-head h3 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #3A332B;
+  margin: 0 0 6px;
+  letter-spacing: 0.5px;
+}
+.unlocked-sub {
+  font-size: 0.85rem;
+  color: #6B5D44;
+  margin: 0;
+  letter-spacing: 0.3px;
+}
+.unlocked-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+@media (max-width: 640px) {
+  .unlocked-grid { grid-template-columns: 1fr; }
+}
+.unlocked-card {
+  display: flex;
+  flex-direction: column;
+  padding: 18px 18px 16px;
+  background: #fff;
+  border: 1px solid #E8DFC8;
+  border-radius: 10px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.25s ease;
+  position: relative;
+}
+.unlocked-card:hover {
+  transform: translateY(-2px);
+  border-color: #C49E69;
+  box-shadow: 0 8px 22px rgba(124, 131, 123, 0.12);
+}
+.unlocked-tag {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 3px 10px;
+  font-size: 0.72rem;
+  color: #7C837B;
+  background: #F3F1ED;
+  border-radius: 4px;
+  letter-spacing: 0.8px;
+  margin-bottom: 10px;
+}
+.unlocked-card h4 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #3A332B;
+  margin: 0 0 10px;
+  line-height: 1.45;
+}
+.unlocked-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 14px;
+  font-size: 0.85rem;
+  color: #4A4036;
+  line-height: 1.75;
+}
+.unlocked-bullets li {
+  padding-left: 14px;
+  position: relative;
+}
+.unlocked-bullets li::before {
+  content: '·';
+  position: absolute;
+  left: 4px;
+  color: #C49E69;
+  font-weight: bold;
+}
+.unlocked-desc {
+  font-size: 0.85rem;
+  color: #4A4036;
+  margin: 0 0 14px;
+  line-height: 1.65;
+  flex-grow: 1;
+}
+.unlocked-cta {
+  margin-top: auto;
+  font-size: 0.85rem;
+  color: #7C837B;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  align-self: flex-end;
+}
+.unlocked-card:hover .unlocked-cta {
+  color: #C49E69;
+}
+
+/* ═══════════════════════════════════════════════════════
    S4 照片上傳區
    ═══════════════════════════════════════════════════════ */
 
