@@ -32,7 +32,7 @@
   "region_adjustment": {
     "description": "區域加成（雙北/離島套同標準，桃竹苗/中/南 各自分層）",
     "zones": [
-      { "key": "tpe",     "label": "雙北 / 基隆",       "counties": ["台北", "新北", "基隆"],           "adjustment_pct": 20, "design_fee_zone": "tpe_outlying" },
+      { "key": "tpe",     "label": "雙北 / 基隆",       "counties": ["台北", "新北", "基隆"],           "adjustment_pct": 15, "design_fee_zone": "tpe_outlying" },
       { "key": "outlying","label": "離島（澎金馬）",     "counties": ["澎湖", "金門", "馬祖"],           "adjustment_pct": 20, "design_fee_zone": "tpe_outlying" },
       { "key": "tcm",     "label": "桃竹苗",            "counties": ["桃園", "新竹", "苗栗"],           "adjustment_pct": 10, "design_fee_zone": "tcm_central_south" },
       { "key": "central", "label": "中部",              "counties": ["台中", "彰化", "南投", "雲林"],   "adjustment_pct": 5,  "design_fee_zone": "tcm_central_south" },
@@ -85,7 +85,7 @@
     "options": [
       { "key": "none",  "label": "不需要",     "apartment_10k": 0,  "townhouse_10k": 0,   "desc": "預設" },
       { "key": "basic", "label": "入門基礎",   "apartment_10k": 15, "townhouse_10k": 22,  "desc": "照明 + 窗簾" },
-      { "key": "mid",   "label": "中階需求",   "apartment_10k": 27, "townhouse_10k": 60,  "desc": "+ 空調 + 影音", "_review_2026_05_25": "TODO Carol 覆核：透天 60 萬／大樓 27 萬跳幅 +122% 偏高（入門 +47%、高階 +100%）" },
+      { "key": "mid",   "label": "中階需求",   "apartment_10k": 27, "townhouse_10k": 47,  "desc": "+ 空調 + 影音" },
       { "key": "high",  "label": "高階需求",   "apartment_10k": 60, "townhouse_10k": 120, "desc": "+ 中控 + 安防" }
     ]
   },

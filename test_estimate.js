@@ -23,8 +23,9 @@ const cases = [
       regularWindows: 0, balconyWindows: 0,
       largeEquipment: [], smartHome: 'none'
     },
-    expected: { unitPrice: 5.71, mainBody: 102.8, aircon: 13.5, engineeringSubtotal: 116.3,
-                designFee: 10.8, total: 146, range: [139, 153], confLabel: '🟢 高' }
+    // baseline updated 2026-05-25: tpe 加成 +20→+15
+    expected: { unitPrice: 5.47, mainBody: 98.5, aircon: 13.5, engineeringSubtotal: 112,
+                designFee: 10.8, total: 141, range: [134, 148], confLabel: '🟢 高' }
   },
   {
     name: '2. 新北中古大樓翻新',
@@ -36,7 +37,8 @@ const cases = [
       regularWindows: 0, balconyWindows: 0,
       largeEquipment: ['water_filter'], smartHome: 'none'
     },
-    expected: { unitPrice: 9.06, total: 419, range: [377, 440], confLabel: '🟡 中' }
+    // baseline updated 2026-05-25: tpe 加成 +20→+15（新北）
+    expected: { unitPrice: 8.33, total: 396, range: [356, 416], confLabel: '🟡 中' }
   },
   {
     name: '3. 台北老公寓重整',
@@ -48,7 +50,8 @@ const cases = [
       regularWindows: 6, balconyWindows: 0,
       largeEquipment: ['hrv', 'water_filter', 'dehumidifier'], smartHome: 'basic'
     },
-    expected: { unitPrice: 13.61, total: 533, range: [426, 613], confLabel: '🔴 低' }
+    // baseline updated 2026-05-25: tpe 加成 +20→+15
+    expected: { unitPrice: 13.11, total: 519, range: [415, 597], confLabel: '🔴 低' }
   },
   {
     name: '4. 新竹預售客變',
@@ -97,7 +100,8 @@ const cases = [
       largeEquipment: ['water_filter', 'water_softener', 'heat_pump', 'solar'],
       smartHome: 'mid'
     },
-    expected: { unitPrice: 12.66, total: 1123, range: [898, 1291], confLabel: '🔴 低' }
+    // baseline updated 2026-05-25: smart_home mid 透天 60→47
+    expected: { unitPrice: 12.66, total: 1108, range: [886, 1274], confLabel: '🔴 低' }
   },
   {
     name: '8. 屏東透天老屋',
