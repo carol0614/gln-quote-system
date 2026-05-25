@@ -46,14 +46,12 @@ const LANDING_HEADERS = [
 
 // 中文對照表
 const WORRY_LABELS = {
-  budget:        '💰 預算超出',
-  timeline:      '⏱ 工期延誤',
-  design:        '🎨 設計不對',
-  quality:       '🛠 用料偷工',
-  upsell:        '💸 一直被追加費',
-  communication: '🗣 溝通雞同鴨講',
-  craftsmanship: '🔨 師傅做工粗糙',
-  regret:        '😰 完工才後悔'
+  budget:        '超出預算',
+  timeline:      '工程延誤',
+  communication: '設計師溝通不良',
+  quality:       '基礎工程品質看不出來',
+  noresponse:    '出問題找不到人',
+  hidden:        '住進去後才發現問題'
 };
 const MOVEIN_LABELS = {
   '3m':  '3 個月內',
