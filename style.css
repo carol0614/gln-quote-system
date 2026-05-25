@@ -69,10 +69,13 @@ h1, h2, h3, h4, h5, h6,
   text-wrap: balance;
 }
 
-/* 2. 段落避免孤字（避免最後一行只剩 1-2 個字符）*/
+/* 2. 段落避免孤字 + CJK 雙音節詞不被拆斷 */
 p, li, dd, .field-hint, .step-hint,
 .callout-lead, .callout-foot, .resource-card p {
   text-wrap: pretty;
+  word-break: keep-all;       /* 禁止 CJK mid-word 斷行 */
+  overflow-wrap: break-word;  /* 超長英文/URL 允許斷 */
+  line-break: strict;         /* 嚴守 CJK 標點換行規則 */
 }
 
 /* 3. 工具類：禁止換行（用於價格 + 單位、品牌名稱、數字組合）*/
@@ -613,7 +616,12 @@ textarea { resize: vertical; min-height: 60px; }
   border-bottom: 1px solid var(--color-line);
   padding-bottom: 8px;
 }
-.about-item p { font-size: 0.95rem; color: var(--color-ink-soft); }
+.about-item p {
+  font-size: 0.95rem;
+  color: var(--color-ink-soft);
+  margin-bottom: 0.9em;
+}
+.about-item p:last-child { margin-bottom: 0; }
 .about-stats {
   list-style: none;
   display: flex; flex-direction: column;
@@ -1149,10 +1157,12 @@ textarea { resize: vertical; min-height: 60px; }
   text-align: center;
 }
 .social-label {
-  font-size: 0.85rem;
-  color: var(--color-ink-soft);
-  letter-spacing: 0.6px;
-  margin: 0 0 var(--space-2);
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--color-ink);
+  letter-spacing: 4px;
+  margin: 0 0 var(--space-3);
 }
 .social-icons {
   display: flex;
