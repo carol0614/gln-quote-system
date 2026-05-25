@@ -883,6 +883,77 @@ textarea { resize: vertical; min-height: 60px; }
   font-size: 1.2rem;
 }
 
+/* Gated 資源卡（點擊需先完成估價） */
+.resource-card-gated {
+  background: linear-gradient(135deg, #FAF6EE 0%, #F1ECE0 100%);
+  border-color: #E0D5BC;
+  cursor: pointer;
+}
+.resource-card-gated:hover {
+  border-color: #C49E69;
+  box-shadow: 0 8px 22px rgba(196, 158, 105, 0.14);
+}
+.resource-tag-locked {
+  background: #EBE4D0 !important;
+  color: #8B6F3D !important;
+  letter-spacing: 0.5px;
+}
+.resource-card-gated .resource-arrow {
+  font-size: 0.85rem;
+  font-family: inherit;
+  color: #8B6F3D;
+  letter-spacing: 0.4px;
+}
+.resource-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 14px;
+  font-size: 0.88rem;
+  color: var(--color-ink-soft);
+  line-height: 1.75;
+}
+.resource-bullets li {
+  padding-left: 12px;
+  position: relative;
+}
+.resource-bullets li::before {
+  content: '·';
+  position: absolute;
+  left: 2px;
+  color: #C49E69;
+  font-weight: bold;
+}
+
+/* Toast 提示（點擊 gated 卡時顯示） */
+.gated-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 32px;
+  transform: translateX(-50%) translateY(20px);
+  background: #3A332B;
+  color: #FAF6EE;
+  padding: 14px 22px;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(58, 51, 43, 0.28);
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  max-width: 90%;
+  letter-spacing: 0.4px;
+}
+.gated-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.gated-toast.hide {
+  opacity: 0;
+  transform: translateX(-50%) translateY(20px);
+}
+
 /* ──────────────────────────────────────────────────
    FAQ Accordion
    ────────────────────────────────────────────────── */

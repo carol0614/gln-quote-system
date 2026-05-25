@@ -269,6 +269,39 @@
   document.getElementById('modal-close').addEventListener('click', () => modal.hidden = true);
   modal.addEventListener('click', (e) => { if (e.target === modal) modal.hidden = true; });
 
+  // ────────────────────────────────────────────────
+  // Gated 資源卡：點擊 → 滾到表單區 + 顯示 toast 提示
+  // ────────────────────────────────────────────────
+  document.querySelectorAll('.resource-card-gated').forEach((card) => {
+    card.addEventListener('click', (e) => {
+      e.preventDefault();
+      // 滾到表單區
+      const target = document.getElementById('mode-full');
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // 顯示提示
+      showGatedToast();
+    });
+  });
+
+  function showGatedToast() {
+    let toast = document.getElementById('gated-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'gated-toast';
+      toast.className = 'gated-toast';
+      toast.innerHTML = '🔒 完成下方估價填寫，<br>即可解鎖兩份精選資源。';
+      document.body.appendChild(toast);
+    }
+    toast.classList.remove('hide');
+    void toast.offsetWidth; // restart animation
+    toast.classList.add('show');
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(() => {
+      toast.classList.remove('show');
+      toast.classList.add('hide');
+    }, 3500);
+  }
+
   function fmt(n) { return Number(n).toLocaleString('zh-TW'); }
 
   // 7 大類 metadata（廚房+衛浴已合併為廚衛設備）
@@ -489,7 +522,7 @@
       <div class="result-unlocked">
         <div class="unlocked-head">
           <span class="unlocked-icon">🎁</span>
-          <h3>感謝您完成估價，為您解鎖 2 份精選資源</h3>
+          <h3>感謝您完成填寫，為您解鎖兩份精選資源</h3>
           <p class="unlocked-sub">由 GLN 17 年實戰經驗整理，限完成估價的屋主取得。</p>
         </div>
         <div class="unlocked-grid">
