@@ -454,7 +454,7 @@
             <li>✅ 歐美精緻系統櫃 <span class="nowrap">NT$ 30 萬</span> 起</li>
             <li>✅ 全程 GLN 同一團隊監工，品質一致</li>
           </ul>
-          <p class="callout-foot">💡 加入官方 LINE <strong>@glninterior</strong> 並告知客服「想了解 GLV 系統櫃方案」，我們會安排 GLV 設計師專人接洽。</p>
+          <p class="callout-foot">💡 私訊我們的客服「想了解 GLV 系統櫃方案」，我們會安排 GLV 設計師專人接洽。</p>
         </div>
       `;
     }
@@ -573,16 +573,16 @@
       <!-- ⑨ LINE CTA + 隱藏資源 -->
       <div class="result-line-cta">
         <p class="result-line-eyebrow">🎁 LINE 好友限定</p>
-        <p class="result-line-title">${meta.lineId ? '立即加入官方 LINE 領取隱藏資源' : '加入官方 LINE，再多領一份隱藏資源'}</p>
+        <p class="result-line-title">${meta.lineId ? '預約專人諮詢領取限定資源' : '預約專人諮詢，領取限定資源'}</p>
         <p class="result-line-sub">${meta.lineId
-          ? `已收到您的 LINE ID <strong>${meta.lineId}</strong>，加好友後將同步推送：`
-          : '加入後告知您填的 LINE ID（或留言「預算分配表」），即可同步收到：'}</p>
+          ? `已收到您的 LINE ID <strong>${meta.lineId}</strong>，專人聯絡時將同步推送：`
+          : '請告知您的 LINE ID（或留言「預算分配表」），即可同步收到：'}</p>
         <ul class="result-line-perks">
-          <li>📕 <strong>必檢測工程清單</strong>（依您的案型客製，LINE 好友限定）</li>
+          <li>📕 <strong>必檢測工程清單</strong>（依您的案型客製，限定資源）</li>
           <li>📞 設計師 <span class="nowrap">24 小時內</span>專人回覆您的客製建議</li>
           <li>📐 預約免費 <span class="nowrap">30 分鐘</span>線上評估或現場丈量試用</li>
         </ul>
-        <a href="https://lin.ee/YXt0syEs" target="_blank" rel="noopener" class="btn btn-line btn-line-lg">加入官方 LINE 領取 →</a>
+        <a href="https://lin.ee/YXt0syEs" target="_blank" rel="noopener" class="btn btn-line btn-line-lg">預約專人諮詢 →</a>
         <p class="result-line-meta">官方 LINE ID：@glninterior　·　0910-859-525</p>
       </div>
 
