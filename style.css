@@ -204,6 +204,16 @@ a:hover { color: var(--color-ink); }
   color: var(--color-ink-soft);
   font-size: 0.95rem;
 }
+.section-header .section-disclaimer {
+  font-size: 0.82rem;
+  color: var(--color-ink-soft);
+  opacity: 0.78;
+  margin-top: 8px;
+  line-height: 1.65;
+  max-width: 580px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 /* ──────────────────────────────────────────────────
    Progress Bar

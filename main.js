@@ -289,7 +289,7 @@
       toast = document.createElement('div');
       toast.id = 'gated-toast';
       toast.className = 'gated-toast';
-      toast.innerHTML = '🔒 完成下方估價填寫，<br>即可解鎖兩份精選資源。';
+      toast.innerHTML = '🔒 完成下方預算分配填寫，<br>即可解鎖兩份精選資源。';
       document.body.appendChild(toast);
     }
     toast.classList.remove('hide');
@@ -415,7 +415,7 @@
             <li><b>全屋防水重做</b> ─ 衛浴、廚房、陽台、外牆需整體規劃</li>
             <li><b>管線全換</b> ─ 水管、電線、瓦斯管常已老化或不符現行規範</li>
           </ol>
-          <p class="callout-foot">💡 本估價已假設這三項都會做。若您近 10 年內已更新過，請在「最近一次裝修」欄位填寫，我們會酌減。</p>
+          <p class="callout-foot">💡 本預算建議已假設這三項都會做。若您近 10 年內已更新過，請在「最近一次裝修」欄位填寫，我們會酌減。</p>
         </div>
       `;
     }
@@ -430,7 +430,7 @@
             <span class="callout-icon">⚠️</span>
             <h3>預算超出該怎麼辦？</h3>
           </div>
-          <p class="callout-lead">您期待的工程預算 <b>${fmt(budgetCap)} 萬</b>，估價區間下限 <b>${fmt(result.clientRange[0])} 萬</b>。先別緊張，這部分可以一起討論。</p>
+          <p class="callout-lead">您期待的工程預算 <b>${fmt(budgetCap)} 萬</b>，預算分配建議下限 <b>${fmt(result.clientRange[0])} 萬</b>。先別緊張，這部分可以一起討論。</p>
           <p class="callout-foot">💡 設計階段我們會做預算的討論控管，也會協助設計及工程優化符合需求，更會引導及給予專業的評估建議。</p>
         </div>
       `;
@@ -523,7 +523,7 @@
         <div class="unlocked-head">
           <span class="unlocked-icon">🎁</span>
           <h3>感謝您完成填寫，為您解鎖兩份精選資源</h3>
-          <p class="unlocked-sub">由 GLN 17 年實戰經驗整理，限完成估價的屋主取得。</p>
+          <p class="unlocked-sub">由 GLN 17 年實戰經驗整理，限完成預算分配的屋主取得。</p>
         </div>
         <div class="unlocked-grid">
           <a href="https://canva.link/j3xqsy8targlex8" target="_blank" rel="noopener" class="unlocked-card">
@@ -560,9 +560,9 @@
 
       <!-- ⑩ 免責 -->
       <p class="result-disclaimer">
-        ⚠️ 本估價為初步參考區間，最終報價以現場勘查後正式報價單為準。<br>
+        ⚠️ 本預算建議為初步參考區間，最終報價以現場勘查後正式報價單為準。<br>
         區間係依您填寫的資料 + GLN 過往案例反推之每坪基準價推算，實際金額可能因屋況、材料庫存、施工難度而調整。<br>
-        本系統估價不含家電、家具、軟裝採購（除非另行討論）。
+        本系統預算建議不含家電、家具、軟裝採購（除非另行討論）。
       </p>
     `;
 
@@ -598,7 +598,7 @@
       console.log('[GLN] 完整估價：', { inputs, result });
     } catch (err) {
       console.error(err);
-      alert('估價計算失敗：' + err.message);
+      alert('預算分配計算失敗：' + err.message);
     }
   });
 

@@ -49,10 +49,10 @@
       按照 GLN 實際案例即時價格更新。
     </p>
     <div class="hero-actions">
-      <button class="btn btn-primary" data-jump="mode-full">完整估價（5 分鐘）</button>
+      <button class="btn btn-primary" data-jump="mode-full">完整預算分配（5 分鐘）</button>
     </div>
     <p class="hero-note">
-      🔒 您的資料僅供本次估價與聯繫使用，不會對外揭露或轉售。
+      🔒 您的資料僅供本次預算建議與聯繫使用，不會對外揭露或轉售。
     </p>
   </div>
 </section>
@@ -330,7 +330,7 @@
         <span class="resource-arrow">→</span>
       </a>
       <a href="#mode-full" class="resource-card resource-card-gated" data-gated="true">
-        <span class="resource-tag resource-tag-locked">🔒 完成估價解鎖</span>
+        <span class="resource-tag resource-tag-locked">🔒 完成預算分配解鎖</span>
         <h4>老屋翻新／自地自建精華版</h4>
         <ul class="resource-bullets">
           <li>什麼是翻新必做工程項目？</li>
@@ -341,7 +341,7 @@
         <span class="resource-arrow">填表解鎖 →</span>
       </a>
       <a href="#mode-full" class="resource-card resource-card-gated" data-gated="true">
-        <span class="resource-tag resource-tag-locked">🔒 完成估價解鎖</span>
+        <span class="resource-tag resource-tag-locked">🔒 完成預算分配解鎖</span>
         <h4>2026 老宅延壽補助申請懶人包</h4>
         <p>最新申請條件、可補助金額、流程與所需文件一次看完。GLN 承接案件可免費協助評估資格。</p>
         <span class="resource-arrow">填表解鎖 →</span>
@@ -360,8 +360,9 @@
   <div class="container">
     <div class="section-header">
       <span class="section-mark">FULL</span>
-      <h2>完整估價</h2>
-      <p>填寫 9 區塊、約 5 分鐘，取得依信心度動態調整的估價區間。</p>
+      <h2>詳細預算分配表</h2>
+      <p>填寫 9 區塊、約 5 分鐘，取得依信心度動態調整的預算分配建議。</p>
+      <p class="section-disclaimer">＊此為內部工程資料庫條件匹配建議參考，不等同於真實報價。完整報價會在設計流程後提供詳細資料。</p>
     </div>
 
     <!-- progress bar -->
@@ -498,7 +499,7 @@
           <div class="field field-full">
             <label>完整地址 <span class="req">*</span></label>
             <input type="text" name="address" required placeholder="例：台北市大安區忠孝東路四段 X 號">
-            <p class="field-hint">🔒 資訊僅作為估價使用，不會外流。</p>
+            <p class="field-hint">🔒 資訊僅作為預算建議使用，不會外流。</p>
           </div>
           <div class="field">
             <label>樓層 / 總樓層</label>
@@ -537,7 +538,7 @@
 
         <!-- 屋況照片上傳區（5 類） -->
         <h4 class="sub-block-title">上傳屋況照（最多每類 5 張，可拖曳）</h4>
-        <p class="step-hint">📷 照片愈完整，現勘前我們愈能判斷工程難度。上傳後資料只供本次估價使用。</p>
+        <p class="step-hint">📷 照片愈完整，現勘前我們愈能判斷工程難度。上傳後資料只供本次預算建議使用。</p>
 
         <div class="photo-upload-grid">
           <div class="photo-zone" data-cat="exterior">
@@ -570,7 +571,7 @@
 
         <div class="ai-analyze-stub">
           <button type="button" class="btn btn-outline btn-ai-disabled" disabled>🤖 AI 屋況分析（功能開發中，下次更新上線）</button>
-          <p class="ai-stub-hint">未來會自動辨識漏水痕跡、管線老化、壁癌、建材等級，並回饋估價建議。</p>
+          <p class="ai-stub-hint">未來會自動辨識漏水痕跡、管線老化、壁癌、建材等級，並回饋預算建議。</p>
         </div>
 
         <div class="step-actions">
@@ -849,7 +850,7 @@
             <label>預約設計總監 / Carol 線上評估</label>
             <div class="radio-row">
               <label><input type="radio" name="siteVisit" value="yes"> 想預約</label>
-              <label><input type="radio" name="siteVisit" value="no" checked> 先看書面估價就好</label>
+              <label><input type="radio" name="siteVisit" value="no" checked> 先看書面預算建議就好</label>
             </div>
           </div>
           <div class="field field-full">
@@ -859,13 +860,13 @@
         </div>
 
         <div class="consent-block">
-          <label><input type="checkbox" id="consent1" required> 我同意 GLN 依本表單資料聯繫我以提供估價服務 <span class="req">*</span></label>
-          <label><input type="checkbox" id="consent2" required> 我了解此估價為初步參考，最終以現勘正式報價為準 <span class="req">*</span></label>
+          <label><input type="checkbox" id="consent1" required> 我同意 GLN 依本表單資料聯繫我以提供預算建議服務 <span class="req">*</span></label>
+          <label><input type="checkbox" id="consent2" required> 我了解此預算建議為初步參考，最終以現勘正式報價為準 <span class="req">*</span></label>
         </div>
 
         <div class="step-actions">
           <button type="button" class="btn btn-outline btn-prev">← 上一步</button>
-          <button type="submit" class="btn btn-primary">取得完整估價 →</button>
+          <button type="submit" class="btn btn-primary">取得完整預算分配 →</button>
         </div>
       </fieldset>
 
@@ -1152,7 +1153,7 @@
       <p>Good Living Notes · 好感生活提案股份有限公司</p>
     </div>
     <div class="footer-meta">
-      <p>本估價僅供參考，最終金額以現場勘查後正式報價為準。</p>
+      <p>本預算建議僅供參考，最終金額以現場勘查後正式報價為準。</p>
       <p>© 2026 GLN. All rights reserved.</p>
     </div>
   </div>
