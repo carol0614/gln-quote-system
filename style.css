@@ -334,6 +334,7 @@ legend {
   color: var(--color-ink-soft);
 }
 .req { color: var(--color-accent); margin-left: 2px; }
+.optional { color: var(--color-ink-soft); font-size: 0.82em; margin-left: 4px; font-weight: 400; }
 
 input[type=text], input[type=email], input[type=tel], input[type=number],
 input[type=month], select, textarea {
